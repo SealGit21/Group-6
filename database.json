@@ -1,0 +1,158 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "AirFlex Runner",
+      "brand": "Vento",
+      "categoryId": 1,
+      "gender": "unisex",
+      "description": "Giày chạy nhẹ, đệm êm, phù hợp chạy bộ và dùng hàng ngày.",
+      "basePrice": 2490000,
+      "salePrice": 1990000,
+      "rating": 4.7,
+      "tags": [
+        "running",
+        "lightweight",
+        "daily"
+      ],
+      "colors": [
+        "white",
+        "black",
+        "navy"
+      ],
+      "images": [
+        "/images/products/airflex-runner-1.jpg",
+        "/images/products/airflex-runner-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 36,
+          "stock": 5
+        },
+        {
+          "size": 37,
+          "stock": 8
+        },
+        {
+          "size": 38,
+          "stock": 12
+        },
+        {
+          "size": 39,
+          "stock": 7
+        },
+        {
+          "size": 40,
+          "stock": 10
+        }
+      ]
+    }
+  ],
+
+  "categories": [
+    {
+      "id": 1,
+      "name": "Running"
+    },
+    {
+      "id": 2,
+      "name": "Casual"
+    },
+    {
+      "id": 3,
+      "name": "Boots"
+    },
+    {
+      "id": 4,
+      "name": "Sandals"
+    },
+    {
+      "id": 5,
+      "name": "Formal"
+    }
+  ],
+
+  "users": [
+    {
+      "id": 1,
+      "role": "user",
+      "name": "Nguyễn Văn A",
+      "email": "vana@example.com",
+      "passwordHash": "$2b$10$examplehash",
+      "phone": "+84123456789",
+      "address": "123 Đường Lê Lợi, Hà Nội, 100000, Vietnam",
+      "createdAt": "2025-02-10T07:45:00Z"
+    },
+    {
+      "id": 2,
+      "role": "user",
+      "name": "Trần Thị B",
+      "email": "btran@example.com",
+      "passwordHash": "$2b$10$examplehash2",
+      "phone": "+84987654321",
+      "address": null,
+      "createdAt": "2025-04-18T11:20:00Z"
+    }
+  ],
+
+  "admins": [
+    {
+      "id": 1,
+      "role": "admin",
+      "name": "Admin Chính",
+      "email": "admin@example.com",
+      "passwordHash": "$2b$10$adminhash",
+      "createdAt": "2025-01-01T00:00:00Z"
+    }
+  ],
+
+  "orders": [
+    {
+      "id": 1001,
+      "userId": 1,
+      "items": [
+        {
+          "productId": 1,
+          "size": 39,
+          "quantity": 1,
+          "unitPrice": 1990000
+        }
+      ],
+      "subtotal": 1990000,
+      "shipping": 30000,
+      "total": 2020000,
+      "status": "delivered",
+      "payment": {
+        "method": "card",
+        "status": "paid",
+        "paidAt": "2025-07-01T09:00:00Z"
+      },
+      "shippingAddress": "123 Đường Lê Lợi, Hà Nội, 100000, Vietnam",
+      "createdAt": "2025-07-01T08:50:00Z"
+    }
+  ],
+  
+  "carts": [
+    {
+      "userId": 2,
+      "items": [
+        {
+          "productId": 1,
+          "size": 40,
+          "quantity": 1
+        }
+      ]
+    }
+  ],
+  "reviews": [
+    {
+      "id": 5001,
+      "productId": 1,
+      "userId": 1,
+      "rating": 5,
+      "title": "Rất êm",
+      "comment": "Chạy đường dài rất thoải mái.",
+      "createdAt": "2025-07-05T10:00:00Z"
+    }
+  ]
+}
