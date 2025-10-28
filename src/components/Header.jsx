@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Header() {
     return (
-        <Navbar bg="dark" variant="dark" expand="lg" style={{ height: '80px' }}>
+        <Navbar bg="dark" variant="dark" expand="lg" style={{ height: '70px' }}>
             <Container className="d-flex justify-content-between align-items-center">
                 <Navbar.Brand as={NavLink} to="/" className="d-flex align-items-center">
                     <Image
