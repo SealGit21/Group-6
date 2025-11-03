@@ -1090,8 +1090,6 @@
       ]
     }
   ],
-
-
   "categories": [
     {
       "id": 1,
@@ -1134,6 +1132,16 @@
       "phone": "+84987654321",
       "address": null,
       "createdAt": "2025-04-18T11:20:00Z"
+    },
+    {
+      "id": 3,
+      "role": "user",
+      "name": "User3",
+      "email": "abc123@example.com",
+      "passwordHash": "123abc",
+      "phone": "+84123456789",
+      "address": "123 Đường Lê Lợi, Hà Nội, 100000, Vietnam",
+      "createdAt": "2025-02-10T07:45:00Z"
     }
   ],
   "admins": [

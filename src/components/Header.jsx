@@ -1,8 +1,20 @@
-import { Navbar, Nav, Container, FormControl, Form, Button, Image } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { Navbar, Nav, Container, FormControl, Form, Button, Image, Dropdown } from 'react-bootstrap';
+import { } from 'react-bootstrap';
+import { NavLink, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useState } from 'react';
 
 function Header() {
+    const navigate = useNavigate();
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
+
+    //xử lý user đăng nhập/chưa đăng nhập
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        setUser(null);
+        navigate('/');
+    };
+
     return (
         <Navbar bg="dark" variant="dark" expand="lg" style={{ height: '70px' }}>
             <Container className="d-flex justify-content-between align-items-center">
@@ -31,9 +43,50 @@ function Header() {
                     <FormControl className="me-2" type="text" placeholder="Search" />
                     <Button variant="outline-light">Search</Button>
                 </Form>
-                <NavLink to="/cart" className=" ms-4" style={({ isActive }) => ({
-                    color: isActive ? 'red' : 'white', textDecoration: 'none', fontSize: '1.4rem'
-                })}><Image
+
+                {user ? (
+                    <Dropdown className="ms-3">
+                        <Dropdown.Toggle variant="outline-light" id="dropdown-basic">
+                            {user.name}
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu align="end">
+                            <Dropdown.Item onClick={() => navigate('/profile')}>
+                                Thông tin cá nhân
+                            </Dropdown.Item>
+                            <Dropdown.Divider />
+                            <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                ) : (
+                    <div className="ms-3">
+                        <Button
+                            variant="outline-light"
+                            className="me-2"
+                            onClick={() => navigate('/login')}
+                        >
+                            Đăng nhập
+                        </Button>
+                        <Button variant="light" onClick={() => navigate('/register')}>
+                            Đăng ký
+                        </Button>
+                    </div>
+                )}
+                <NavLink to="/cart"
+                    onClick={(e) => {
+                        if (!user) {
+                            e.preventDefault();
+                            alert('Vui lòng đăng nhập trước khi xem giỏ hàng.');
+                            navigate('/login');
+                        } else {
+                            navigate('/cart');
+                        }
+                    }}
+
+                    className=" ms-4"
+                    style={({ isActive }) => ({ color: isActive ? 'red' : 'white', textDecoration: 'none', fontSize: '1.4rem' })}>
+
+                    <Image
                         src="/logo/cart.png"
                         alt="Cart"
                         width="35"
@@ -41,7 +94,9 @@ function Header() {
                         className="me-1"
                     />
 
-                </NavLink>s
+                </NavLink>
+
+
             </Container>
         </Navbar>
     );
