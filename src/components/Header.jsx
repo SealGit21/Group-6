@@ -39,9 +39,9 @@ function Header() {
                     })}>Products</NavLink>
                 </Nav>
 
-                <Form className="d-flex">
+                <Form className="d-flex me-4">
                     <FormControl className="me-2" type="text" placeholder="Search" />
-                    <Button variant="outline-light">Search</Button>
+
                 </Form>
 
                 {user ? (
