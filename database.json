@@ -2,40 +2,175 @@
   "products": [
     {
       "id": 1,
-      "name": "AirFlex Runner",
-      "brand": "Vento",
+      "name": "Nike ZoomFly 5",
+      "brand": "Nike",
       "categoryId": 1,
       "gender": "unisex",
-      "description": "Giày chạy nhẹ, đệm êm, phù hợp chạy bộ và dùng hàng ngày.",
-      "basePrice": 2490000,
-      "salePrice": 1990000,
-      "rating": 4.7,
+      "description": "Giày chạy tốc độ với đế ZoomX cho độ nảy cao.",
+      "basePrice": 3690000,
+      "salePrice": 3190000,
+      "rating": 4.8,
       "tags": [
         "running",
-        "lightweight",
-        "daily"
+        "speed",
+        "lightweight"
       ],
       "colors": [
         "white",
         "black",
-        "navy"
+        "volt"
       ],
       "images": [
-        "/images/products/airflex-runner-1.jpg",
-        "/images/products/airflex-runner-2.jpg"
+        "/images/products/zoomfly5-1.jpg",
+        "/images/products/zoomfly5-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 38,
+          "stock": 10
+        },
+        {
+          "size": 39,
+          "stock": 8
+        },
+        {
+          "size": 40,
+          "stock": 7
+        },
+        {
+          "size": 41,
+          "stock": 6
+        },
+        {
+          "size": 42,
+          "stock": 9
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Adidas Adizero SL",
+      "brand": "Adidas",
+      "categoryId": 1,
+      "gender": "men",
+      "description": "Cấu trúc Lightstrike cho cảm giác nhẹ và nhanh.",
+      "basePrice": 2990000,
+      "salePrice": null,
+      "rating": 4.6,
+      "tags": [
+        "running",
+        "training"
+      ],
+      "colors": [
+        "black",
+        "orange"
+      ],
+      "images": [
+        "/images/products/adizero-sl-1.jpg",
+        "/images/products/adizero-sl-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 39,
+          "stock": 12
+        },
+        {
+          "size": 40,
+          "stock": 7
+        },
+        {
+          "size": 41,
+          "stock": 6
+        },
+        {
+          "size": 42,
+          "stock": 5
+        },
+        {
+          "size": 43,
+          "stock": 4
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Asics Novablast 4",
+      "brand": "Asics",
+      "categoryId": 1,
+      "gender": "unisex",
+      "description": "Đệm FF Blast Plus cho cảm giác bật mạnh.",
+      "basePrice": 3290000,
+      "salePrice": 2890000,
+      "rating": 4.7,
+      "tags": [
+        "running",
+        "bounce"
+      ],
+      "colors": [
+        "blue",
+        "white"
+      ],
+      "images": [
+        "/images/products/novablast4-1.jpg",
+        "/images/products/novablast4-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 38,
+          "stock": 10
+        },
+        {
+          "size": 39,
+          "stock": 8
+        },
+        {
+          "size": 40,
+          "stock": 7
+        },
+        {
+          "size": 41,
+          "stock": 6
+        },
+        {
+          "size": 42,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Puma Velocity Nitro 3",
+      "brand": "Puma",
+      "categoryId": 1,
+      "gender": "women",
+      "description": "Đệm Nitro nhẹ và êm cho chạy hằng ngày.",
+      "basePrice": 2590000,
+      "salePrice": 2290000,
+      "rating": 4.5,
+      "tags": [
+        "running",
+        "daily"
+      ],
+      "colors": [
+        "pink",
+        "black"
+      ],
+      "images": [
+        "/images/products/velocity3-1.jpg",
+        "/images/products/velocity3-2.jpg"
       ],
       "sizes": [
         {
           "size": 36,
-          "stock": 5
+          "stock": 12
         },
         {
           "size": 37,
-          "stock": 8
+          "stock": 10
         },
         {
           "size": 38,
-          "stock": 12
+          "stock": 9
         },
         {
           "size": 39,
@@ -43,11 +178,919 @@
         },
         {
           "size": 40,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "New Balance Fresh Foam 1080v13",
+      "brand": "New Balance",
+      "categoryId": 1,
+      "gender": "unisex",
+      "description": "Đệm Fresh Foam êm sâu cho chạy dài.",
+      "basePrice": 3790000,
+      "salePrice": 2590000,
+      "rating": 4.9,
+      "tags": [
+        "running",
+        "maxcushion"
+      ],
+      "colors": [
+        "navy",
+        "gray"
+      ],
+      "images": [
+        "/images/products/1080v13-1.jpg",
+        "/images/products/1080v13-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 39,
+          "stock": 6
+        },
+        {
+          "size": 40,
+          "stock": 5
+        },
+        {
+          "size": 41,
+          "stock": 5
+        },
+        {
+          "size": 42,
+          "stock": 4
+        },
+        {
+          "size": 43,
+          "stock": 3
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Vans Old Skool",
+      "brand": "Vans",
+      "categoryId": 2,
+      "gender": "unisex",
+      "description": "Phong cách skate cổ điển.",
+      "basePrice": 1590000,
+      "salePrice": null,
+      "rating": 4.6,
+      "tags": [
+        "casual",
+        "street"
+      ],
+      "colors": [
+        "black",
+        "white"
+      ],
+      "images": [
+        "/images/products/oldskool-1.jpg",
+        "/images/products/oldskool-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 38,
+          "stock": 12
+        },
+        {
+          "size": 39,
           "stock": 10
+        },
+        {
+          "size": 40,
+          "stock": 8
+        },
+        {
+          "size": 41,
+          "stock": 7
+        },
+        {
+          "size": 42,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Converse Chuck Taylor High",
+      "brand": "Converse",
+      "categoryId": 2,
+      "gender": "unisex",
+      "description": "Mẫu giày kinh điển hàng chục năm.",
+      "basePrice": 1500000,
+      "salePrice": 1290000,
+      "rating": 4.5,
+      "tags": [
+        "casual",
+        "classic"
+      ],
+      "colors": [
+        "black",
+        "white",
+        "red"
+      ],
+      "images": [
+        "/images/products/chuckhigh-1.jpg",
+        "/images/products/chuckhigh-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 37,
+          "stock": 10
+        },
+        {
+          "size": 38,
+          "stock": 8
+        },
+        {
+          "size": 39,
+          "stock": 7
+        },
+        {
+          "size": 40,
+          "stock": 7
+        },
+        {
+          "size": 41,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Biti's Hunter Street",
+      "brand": "Biti's",
+      "categoryId": 2,
+      "gender": "unisex",
+      "description": "Phong cách đường phố Việt Nam.",
+      "basePrice": 1190000,
+      "salePrice": 999000,
+      "rating": 4.4,
+      "tags": [
+        "casual",
+        "lightweight"
+      ],
+      "colors": [
+        "white",
+        "gray"
+      ],
+      "images": [
+        "/images/products/hunterstreet-1.jpg",
+        "/images/products/hunterstreet-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 38,
+          "stock": 9
+        },
+        {
+          "size": 39,
+          "stock": 8
+        },
+        {
+          "size": 40,
+          "stock": 6
+        },
+        {
+          "size": 41,
+          "stock": 5
+        },
+        {
+          "size": 42,
+          "stock": 4
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Adidas Court Revival",
+      "brand": "Adidas",
+      "categoryId": 2,
+      "gender": "women",
+      "description": "Thiết kế tối giản, dễ phối đồ.",
+      "basePrice": 1890000,
+      "salePrice": 1490000,
+      "rating": 4.3,
+      "tags": [
+        "casual",
+        "minimal"
+      ],
+      "colors": [
+        "white",
+        "pink"
+      ],
+      "images": [
+        "/images/products/courtrevival-1.jpg",
+        "/images/products/courtrevival-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 36,
+          "stock": 12
+        },
+        {
+          "size": 37,
+          "stock": 10
+        },
+        {
+          "size": 38,
+          "stock": 7
+        },
+        {
+          "size": 39,
+          "stock": 6
+        },
+        {
+          "size": 40,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "New Balance 574 Core",
+      "brand": "New Balance",
+      "categoryId": 2,
+      "gender": "unisex",
+      "description": "Dòng lifestyle biểu tượng của NB.",
+      "basePrice": 2290000,
+      "salePrice": 1690000,
+      "rating": 4.7,
+      "tags": [
+        "casual",
+        "retro"
+      ],
+      "colors": [
+        "navy",
+        "gray"
+      ],
+      "images": [
+        "/images/products/nb574-1.jpg",
+        "/images/products/nb574-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 38,
+          "stock": 8
+        },
+        {
+          "size": 39,
+          "stock": 7
+        },
+        {
+          "size": 40,
+          "stock": 7
+        },
+        {
+          "size": 41,
+          "stock": 5
+        },
+        {
+          "size": 42,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Timberland 6-inch Premium",
+      "brand": "Timberland",
+      "categoryId": 3,
+      "gender": "men",
+      "description": "Biểu tượng của giày boots da cao cấp.",
+      "basePrice": 4890000,
+      "salePrice": 3590000,
+      "rating": 4.8,
+      "tags": [
+        "boots",
+        "leather",
+        "outdoor"
+      ],
+      "colors": [
+        "tan",
+        "brown"
+      ],
+      "images": [
+        "/images/products/timberland6-1.jpg",
+        "/images/products/timberland6-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 40,
+          "stock": 7
+        },
+        {
+          "size": 41,
+          "stock": 6
+        },
+        {
+          "size": 42,
+          "stock": 5
+        },
+        {
+          "size": 43,
+          "stock": 4
+        },
+        {
+          "size": 44,
+          "stock": 3
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Dr. Martens 1460",
+      "brand": "Dr. Martens",
+      "categoryId": 3,
+      "gender": "unisex",
+      "description": "Mũi tròn, đế AirWair nổi tiếng.",
+      "basePrice": 4590000,
+      "salePrice": null,
+      "rating": 4.9,
+      "tags": [
+        "boots",
+        "classic"
+      ],
+      "colors": [
+        "black"
+      ],
+      "images": [
+        "/images/products/dm1460-1.jpg",
+        "/images/products/dm1460-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 38,
+          "stock": 6
+        },
+        {
+          "size": 39,
+          "stock": 6
+        },
+        {
+          "size": 40,
+          "stock": 5
+        },
+        {
+          "size": 41,
+          "stock": 5
+        },
+        {
+          "size": 42,
+          "stock": 4
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Columbia Newton Ridge",
+      "brand": "Columbia",
+      "categoryId": 3,
+      "gender": "unisex",
+      "description": "Chống nước, hỗ trợ cổ chân tốt.",
+      "basePrice": 2990000,
+      "salePrice": 2490000,
+      "rating": 4.6,
+      "tags": [
+        "boots",
+        "hiking"
+      ],
+      "colors": [
+        "brown",
+        "black"
+      ],
+      "images": [
+        "/images/products/newtonridge-1.jpg",
+        "/images/products/newtonridge-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 39,
+          "stock": 8
+        },
+        {
+          "size": 40,
+          "stock": 7
+        },
+        {
+          "size": 41,
+          "stock": 6
+        },
+        {
+          "size": 42,
+          "stock": 6
+        },
+        {
+          "size": 43,
+          "stock": 4
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Merrell Moab 3 Mid",
+      "brand": "Merrell",
+      "categoryId": 3,
+      "gender": "men",
+      "description": "Đế Vibram bám tốt cho địa hình.",
+      "basePrice": 3590000,
+      "salePrice": 2690000,
+      "rating": 4.7,
+      "tags": [
+        "boots",
+        "trail"
+      ],
+      "colors": [
+        "gray",
+        "black"
+      ],
+      "images": [
+        "/images/products/moab3-1.jpg",
+        "/images/products/moab3-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 40,
+          "stock": 5
+        },
+        {
+          "size": 41,
+          "stock": 5
+        },
+        {
+          "size": 42,
+          "stock": 5
+        },
+        {
+          "size": 43,
+          "stock": 4
+        },
+        {
+          "size": 44,
+          "stock": 3
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "North Face Back-To-Berkeley",
+      "brand": "The North Face",
+      "categoryId": 3,
+      "gender": "unisex",
+      "description": "Phong cách retro kết hợp khả năng leo núi.",
+      "basePrice": 3790000,
+      "salePrice": 2790000,
+      "rating": 4.7,
+      "tags": [
+        "boots",
+        "retro"
+      ],
+      "colors": [
+        "brown",
+        "black"
+      ],
+      "images": [
+        "/images/products/berkeley-1.jpg",
+        "/images/products/berkeley-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 39,
+          "stock": 5
+        },
+        {
+          "size": 40,
+          "stock": 5
+        },
+        {
+          "size": 41,
+          "stock": 4
+        },
+        {
+          "size": 42,
+          "stock": 4
+        },
+        {
+          "size": 43,
+          "stock": 3
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Adidas Adilette Shower",
+      "brand": "Adidas",
+      "categoryId": 4,
+      "gender": "unisex",
+      "description": "Dép phòng tắm nhẹ và êm.",
+      "basePrice": 599000,
+      "salePrice": null,
+      "rating": 4.4,
+      "tags": [
+        "sandals",
+        "slide"
+      ],
+      "colors": [
+        "black",
+        "white"
+      ],
+      "images": [
+        "/images/products/adilette-1.jpg",
+        "/images/products/adilette-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 38,
+          "stock": 12
+        },
+        {
+          "size": 39,
+          "stock": 10
+        },
+        {
+          "size": 40,
+          "stock": 8
+        },
+        {
+          "size": 41,
+          "stock": 7
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Nike Victori One",
+      "brand": "Nike",
+      "categoryId": 4,
+      "gender": "men",
+      "description": "Dép êm với đệm contour.",
+      "basePrice": 799000,
+      "salePrice": 699000,
+      "rating": 4.5,
+      "tags": [
+        "sandals",
+        "slide"
+      ],
+      "colors": [
+        "black",
+        "white"
+      ],
+      "images": [
+        "/images/products/victori1-1.jpg",
+        "/images/products/victori1-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 39,
+          "stock": 9
+        },
+        {
+          "size": 40,
+          "stock": 8
+        },
+        {
+          "size": 41,
+          "stock": 6
+        },
+        {
+          "size": 42,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "name": "Crocs Classic Clog",
+      "brand": "Crocs",
+      "categoryId": 4,
+      "gender": "unisex",
+      "description": "Chất liệu Croslite nhẹ và thoáng.",
+      "basePrice": 1290000,
+      "salePrice": 999000,
+      "rating": 4.7,
+      "tags": [
+        "sandals",
+        "foam"
+      ],
+      "colors": [
+        "white",
+        "black",
+        "pink"
+      ],
+      "images": [
+        "/images/products/crocsclassic-1.jpg",
+        "/images/products/crocsclassic-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 38,
+          "stock": 10
+        },
+        {
+          "size": 39,
+          "stock": 9
+        },
+        {
+          "size": 40,
+          "stock": 7
+        },
+        {
+          "size": 41,
+          "stock": 6
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "name": "Vento Outdoor Strap",
+      "brand": "Vento",
+      "categoryId": 4,
+      "gender": "men",
+      "description": "Đế bám tốt, dùng ngoài trời.",
+      "basePrice": 699000,
+      "salePrice": 499000,
+      "rating": 4.2,
+      "tags": [
+        "sandals",
+        "outdoor"
+      ],
+      "colors": [
+        "brown",
+        "black"
+      ],
+      "images": [
+        "/images/products/vento-outdoor-1.jpg",
+        "/images/products/vento-outdoor-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 39,
+          "stock": 9
+        },
+        {
+          "size": 40,
+          "stock": 7
+        },
+        {
+          "size": 41,
+          "stock": 6
+        },
+        {
+          "size": 42,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Teva Hurricane Drift",
+      "brand": "Teva",
+      "categoryId": 4,
+      "gender": "unisex",
+      "description": "Dép quai siêu nhẹ cho đi chơi.",
+      "basePrice": 1090000,
+      "salePrice": 799000,
+      "rating": 4.5,
+      "tags": [
+        "sandals",
+        "travel"
+      ],
+      "colors": [
+        "blue",
+        "white"
+      ],
+      "images": [
+        "/images/products/hurricane-1.jpg",
+        "/images/products/hurricane-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 38,
+          "stock": 8
+        },
+        {
+          "size": 39,
+          "stock": 8
+        },
+        {
+          "size": 40,
+          "stock": 7
+        },
+        {
+          "size": 41,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "name": "Clarks Tilden Cap",
+      "brand": "Clarks",
+      "categoryId": 5,
+      "gender": "men",
+      "description": "Giày tây mũi cap toe cổ điển.",
+      "basePrice": 2690000,
+      "salePrice": null,
+      "rating": 4.7,
+      "tags": [
+        "formal",
+        "leather"
+      ],
+      "colors": [
+        "black",
+        "brown"
+      ],
+      "images": [
+        "/images/products/tildencap-1.jpg",
+        "/images/products/tildencap-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 39,
+          "stock": 6
+        },
+        {
+          "size": 40,
+          "stock": 6
+        },
+        {
+          "size": 41,
+          "stock": 5
+        },
+        {
+          "size": 42,
+          "stock": 4
+        },
+        {
+          "size": 43,
+          "stock": 3
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "name": "Ecco Soft 7 Slip-on",
+      "brand": "Ecco",
+      "categoryId": 5,
+      "gender": "women",
+      "description": "Phong cách tối giản, thoải mái cả ngày.",
+      "basePrice": 2890000,
+      "salePrice": 2390000,
+      "rating": 4.6,
+      "tags": [
+        "formal",
+        "slipon"
+      ],
+      "colors": [
+        "white",
+        "black"
+      ],
+      "images": [
+        "/images/products/soft7-1.jpg",
+        "/images/products/soft7-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 36,
+          "stock": 8
+        },
+        {
+          "size": 37,
+          "stock": 7
+        },
+        {
+          "size": 38,
+          "stock": 6
+        },
+        {
+          "size": 39,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "name": "Hugo Boss Kensington Loafer",
+      "brand": "Hugo Boss",
+      "categoryId": 5,
+      "gender": "men",
+      "description": "Giày loafer da cao cấp.",
+      "basePrice": 3990000,
+      "salePrice": 2990000,
+      "rating": 4.8,
+      "tags": [
+        "formal",
+        "loafer"
+      ],
+      "colors": [
+        "brown",
+        "black"
+      ],
+      "images": [
+        "/images/products/kensington-1.jpg",
+        "/images/products/kensington-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 40,
+          "stock": 6
+        },
+        {
+          "size": 41,
+          "stock": 5
+        },
+        {
+          "size": 42,
+          "stock": 4
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "name": "Geox Arlara Heels",
+      "brand": "Geox",
+      "categoryId": 5,
+      "gender": "women",
+      "description": "Giày cao gót thông hơi thoáng khí.",
+      "basePrice": 2590000,
+      "salePrice": 1990000,
+      "rating": 4.4,
+      "tags": [
+        "formal",
+        "heels"
+      ],
+      "colors": [
+        "black",
+        "beige"
+      ],
+      "images": [
+        "/images/products/arlara-1.jpg",
+        "/images/products/arlara-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 36,
+          "stock": 12
+        },
+        {
+          "size": 37,
+          "stock": 10
+        },
+        {
+          "size": 38,
+          "stock": 8
+        },
+        {
+          "size": 39,
+          "stock": 6
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "name": "Bata Heritage Oxford",
+      "brand": "Bata",
+      "categoryId": 5,
+      "gender": "men",
+      "description": "Thiết kế công sở truyền thống.",
+      "basePrice": 1990000,
+      "salePrice": 1490000,
+      "rating": 4.3,
+      "tags": [
+        "formal",
+        "oxford"
+      ],
+      "colors": [
+        "black",
+        "brown"
+      ],
+      "images": [
+        "/images/products/bataoxford-1.jpg",
+        "/images/products/bataoxford-2.jpg"
+      ],
+      "sizes": [
+        {
+          "size": 39,
+          "stock": 10
+        },
+        {
+          "size": 40,
+          "stock": 7
+        },
+        {
+          "size": 41,
+          "stock": 6
+        },
+        {
+          "size": 42,
+          "stock": 5
         }
       ]
     }
   ],
+
 
   "categories": [
     {
@@ -71,7 +1114,6 @@
       "name": "Formal"
     }
   ],
-
   "users": [
     {
       "id": 1,
@@ -94,7 +1136,6 @@
       "createdAt": "2025-04-18T11:20:00Z"
     }
   ],
-
   "admins": [
     {
       "id": 1,
@@ -105,7 +1146,6 @@
       "createdAt": "2025-01-01T00:00:00Z"
     }
   ],
-
   "orders": [
     {
       "id": 1001,
@@ -131,7 +1171,6 @@
       "createdAt": "2025-07-01T08:50:00Z"
     }
   ],
-  
   "carts": [
     {
       "userId": 2,
