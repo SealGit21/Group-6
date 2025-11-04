@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Table, Badge, Row, Col } from 'react-bootstrap';
-import axios from 'axios';
+import { api } from '../services/api';
 
 function AdminDashboard() {
   const [data, setData] = useState({
@@ -10,22 +10,21 @@ function AdminDashboard() {
     categories: [],
     reviews: []
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load data from json-server
-    console.log('Đang fetch dữ liệu từ json-server...');
-    axios.get('http://localhost:3000/db')
-      .then(response => {
-        console.log('Fetch dữ liệu thành công:', response.data);
-        console.log('Số lượng orders:', response.data.orders?.length || 0);
-        console.log('Số lượng users:', response.data.users?.length || 0);
-        console.log('Số lượng products:', response.data.products?.length || 0);
-        setData(response.data);
-      })
-      .catch(error => {
-        console.error('Lỗi khi tải dữ liệu:', error);
-        console.error('Chi tiết lỗi:', error.response || error.message);
-      });
+    const fetchData = async () => {
+      try {
+        const allData = await api.getAllData();
+        setData(allData);
+      } catch (error) {
+        console.error('Lỗi:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   // Tính toán thống kê
@@ -50,6 +49,10 @@ function AdminDashboard() {
       ? <Badge bg="success">Đã thanh toán</Badge>
       : <Badge bg="warning">Chưa thanh toán</Badge>;
   };
+
+  if (loading) {
+    return <div className="text-center py-5"><h4>Đang tải...</h4></div>;
+  }
 
   return (
     <div className="admin-dashboard">
@@ -121,7 +124,7 @@ function AdminDashboard() {
                     <td className="text-danger fw-bold">
                       {product.salePrice.toLocaleString('vi-VN')}đ
                     </td>
-                    <td>⭐ {product.rating}</td>
+                    <td>{product.rating}</td>
                     <td>{totalStock} đôi</td>
                   </tr>
                 );
@@ -253,7 +256,7 @@ function AdminDashboard() {
                       <tr key={review.id}>
                         <td>{product?.name || 'N/A'}</td>
                         <td>{user?.name || 'N/A'}</td>
-                        <td>⭐ {review.rating}</td>
+                        <td> {review.rating}</td>
                         <td>{review.comment}</td>
                       </tr>
                     );
