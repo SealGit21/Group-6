@@ -1,7 +1,7 @@
 {
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Nike ZoomFly 5",
       "brand": "Nike",
       "categoryId": 1,
@@ -49,7 +49,7 @@
       "createdAt": "2025-10-13"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Adidas Adizero SL",
       "brand": "Adidas",
       "categoryId": 1,
@@ -95,7 +95,7 @@
       "createdAt": "2025-10-12"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Asics Novablast 4",
       "brand": "Asics",
       "categoryId": 1,
@@ -141,7 +141,7 @@
       "createdAt": "2025-10-10"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Puma Velocity Nitro 3",
       "brand": "Puma",
       "categoryId": 1,
@@ -187,7 +187,7 @@
       "createdAt": "2025-11-01"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "New Balance Fresh Foam 1080v13",
       "brand": "New Balance",
       "categoryId": 1,
@@ -233,7 +233,7 @@
       "createdAt": "2025-10-13"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Vans Old Skool",
       "brand": "Vans",
       "categoryId": 2,
@@ -279,7 +279,7 @@
       "createdAt": "2025-10-13"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Converse Chuck Taylor High",
       "brand": "Converse",
       "categoryId": 2,
@@ -326,7 +326,7 @@
       "createdAt": "2025-9-13"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Biti's Hunter Street",
       "brand": "Biti's",
       "categoryId": 2,
@@ -372,7 +372,7 @@
       "createdAt": "2025-10-17"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Adidas Court Revival",
       "brand": "Adidas",
       "categoryId": 2,
@@ -418,7 +418,7 @@
       "createdAt": "2025-10-31"
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "New Balance 574 Core",
       "brand": "New Balance",
       "categoryId": 2,
@@ -464,7 +464,7 @@
       "createdAt": "2025-10-03"
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "Timberland 6-inch Premium",
       "brand": "Timberland",
       "categoryId": 3,
@@ -511,7 +511,7 @@
       "createdAt": "2025-10-07"
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "Dr. Martens 1460",
       "brand": "Dr. Martens",
       "categoryId": 3,
@@ -556,7 +556,7 @@
       "createdAt": "2025-10-01"
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "Columbia Newton Ridge",
       "brand": "Columbia",
       "categoryId": 3,
@@ -602,7 +602,7 @@
       "createdAt": "2025-11-02"
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "Merrell Moab 3 Mid",
       "brand": "Merrell",
       "categoryId": 3,
@@ -647,7 +647,7 @@
       ]
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "North Face Back-To-Berkeley",
       "brand": "The North Face",
       "categoryId": 3,
@@ -693,7 +693,7 @@
       "createdAt": "2025-10-02"
     },
     {
-      "id": 16,
+      "id": "16",
       "name": "Adidas Adilette Shower",
       "brand": "Adidas",
       "categoryId": 4,
@@ -735,7 +735,7 @@
       "createdAt": "2025-10-02"
     },
     {
-      "id": 17,
+      "id": "17",
       "name": "Nike Victori One",
       "brand": "Nike",
       "categoryId": 4,
@@ -777,7 +777,7 @@
       "createdAt": "2025-10-23"
     },
     {
-      "id": 18,
+      "id": "18",
       "name": "Crocs Classic Clog",
       "brand": "Crocs",
       "categoryId": 4,
@@ -820,7 +820,7 @@
       "createdAt": "2025-10-23"
     },
     {
-      "id": 19,
+      "id": "19",
       "name": "Vento Outdoor Strap",
       "brand": "Vento",
       "categoryId": 4,
@@ -862,7 +862,7 @@
       "createdAt": "2025-10-23"
     },
     {
-      "id": 20,
+      "id": "20",
       "name": "Teva Hurricane Drift",
       "brand": "Teva",
       "categoryId": 4,
@@ -904,7 +904,7 @@
       "createdAt": "2025-07-21"
     },
     {
-      "id": 21,
+      "id": "21",
       "name": "Clarks Tilden Cap",
       "brand": "Clarks",
       "categoryId": 5,
@@ -950,7 +950,7 @@
       "createdAt": "2025-10-13"
     },
     {
-      "id": 22,
+      "id": "22",
       "name": "Ecco Soft 7 Slip-on",
       "brand": "Ecco",
       "categoryId": 5,
@@ -992,7 +992,7 @@
       "createdAt": "2025-10-13"
     },
     {
-      "id": 23,
+      "id": "23",
       "name": "Hugo Boss Kensington Loafer",
       "brand": "Hugo Boss",
       "categoryId": 5,
@@ -1030,7 +1030,7 @@
       "createdAt": "2025-10-13"
     },
     {
-      "id": 24,
+      "id": "24",
       "name": "Geox Arlara Heels",
       "brand": "Geox",
       "categoryId": 5,
@@ -1072,7 +1072,7 @@
       "createdAt": "2025-10-13"
     },
     {
-      "id": 25,
+      "id": "25",
       "name": "Bata Heritage Oxford",
       "brand": "Bata",
       "categoryId": 5,
@@ -1116,29 +1116,29 @@
   ],
   "categories": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Running"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Casual"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Boots"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Sandals"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Formal"
     }
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "role": "user",
       "name": "Nguyễn Văn A",
       "email": "vana@example.com",
@@ -1148,7 +1148,7 @@
       "createdAt": "2025-02-10T07:45:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "role": "user",
       "name": "Trần Thị B",
       "email": "btran@example.com",
@@ -1158,7 +1158,7 @@
       "createdAt": "2025-04-18T11:20:00Z"
     },
     {
-      "id": 3,
+      "id": "3",
       "role": "user",
       "name": "User3",
       "email": "abc123@example.com",
@@ -1170,17 +1170,24 @@
   ],
   "admins": [
     {
-      "id": 1,
+      "id": "1",
       "role": "admin",
       "name": "Admin Chính",
       "email": "admin@example.com",
       "passwordHash": "$2b$10$adminhash",
       "createdAt": "2025-01-01T00:00:00Z"
-    }
+    },
+    {
+      "id": "2",
+      "role": "admin",
+      "name": "Admin Phụ",
+      "email": "admin1@gmail.com",
+      "passwordHash": "123456",
+      "createdAt": "2025-01-01T00:00:00Z"}
   ],
   "orders": [
     {
-      "id": 1001,
+      "id": "1001",
       "userId": 1,
       "items": [
         {
@@ -1212,12 +1219,13 @@
           "size": 40,
           "quantity": 1
         }
-      ]
+      ],
+      "id": "527e"
     }
   ],
   "reviews": [
     {
-      "id": 5001,
+      "id": "5001",
       "productId": 1,
       "userId": 1,
       "rating": 5,

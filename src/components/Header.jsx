@@ -1,8 +1,8 @@
-import { Navbar, Nav, Container, FormControl, Form, Button, Image, Dropdown } from 'react-bootstrap';
-import { } from 'react-bootstrap';
+import { Navbar, Nav, Container, FormControl, Form, Button, Image } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 function Header() {
     const navigate = useNavigate();
@@ -14,6 +14,15 @@ function Header() {
         setUser(null);
         navigate('/');
     };
+
+    // Listen to custom event dispatched from Login so header updates immediately
+    useEffect(() => {
+        const onUserChanged = (e) => {
+            setUser(e.detail || JSON.parse(localStorage.getItem('user')) || null);
+        };
+        window.addEventListener('userChanged', onUserChanged);
+        return () => window.removeEventListener('userChanged', onUserChanged);
+    }, []);
 
     return (
         <Navbar bg="dark" variant="dark" expand="lg" style={{ height: '70px' }}>
@@ -45,19 +54,14 @@ function Header() {
                 </Form>
 
                 {user ? (
-                    <Dropdown className="ms-3">
-                        <Dropdown.Toggle variant="outline-light" id="dropdown-basic">
-                            {user.name}
-                        </Dropdown.Toggle>
+                    <div className="d-flex align-items-center ms-3">
+                        {/* Profile button */}
+                        <Button variant="outline-light" className="me-2" onClick={() => navigate('/profile')}>
+                            {user.name || user.email}
+                        </Button>
 
-                        <Dropdown.Menu align="end">
-                            <Dropdown.Item onClick={() => navigate('/profile')}>
-                                Thông tin cá nhân
-                            </Dropdown.Item>
-                            <Dropdown.Divider />
-                            <Dropdown.Item onClick={handleLogout}>Đăng xuất</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                        <Button variant="light" onClick={handleLogout}>Đăng xuất</Button>
+                    </div>
                 ) : (
                     <div className="ms-3">
                         <Button
