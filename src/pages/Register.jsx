@@ -10,7 +10,8 @@ import {
   FormControl,
   Alert,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 function Register() {
   const [fullName, setFullName] = useState("");
@@ -36,7 +37,9 @@ function Register() {
     return e;
   };
 
-  const handleSubmit = (ev) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
     setStatus(null);
     const v = validate();
@@ -44,17 +47,48 @@ function Register() {
     if (Object.keys(v).length) return;
 
     setLoading(true);
-    // simulate API
-    setTimeout(() => {
+    try {
+      // check duplicate email
+      const existing = await api.getUsers();
+      const emailLower = email.trim().toLowerCase();
+      const found = Array.isArray(existing) && existing.find(u => u.email && u.email.toLowerCase() === emailLower);
+      if (found) {
+        setErrors({ email: "Email này đã được sử dụng." });
+        setLoading(false);
+        return;
+      }
+
+      // create user payload
+      const newUser = {
+        role: 'user',
+        name: fullName.trim(),
+        email: emailLower,
+        // For demo JSON DB we store password in passwordHash field (NOT secure). In production, hash on server.
+        passwordHash: password,
+        phone: null,
+        address: null,
+        createdAt: new Date().toISOString()
+      };
+
+      const created = await api.register(newUser);
+      // if server returns created object or success wrapper
+      const createdUser = (created && created.id) ? created : (created && created.data) ? created.data : created;
+      if (createdUser) {
+        setStatus({ type: 'success', message: 'Đăng ký thành công! Chuyển hướng đến trang đăng nhập...' });
+        setTimeout(() => {
+          setLoading(false);
+          navigate('/login');
+        }, 800);
+        return;
+      }
+
+      setStatus({ type: 'danger', message: 'Không thể tạo tài khoản. Vui lòng thử lại.' });
+    } catch (err) {
+      console.error('Register error', err);
+      setStatus({ type: 'danger', message: 'Lỗi khi đăng ký. Vui lòng thử lại.' });
+    } finally {
       setLoading(false);
-      setStatus({ type: "success", message: "Đăng ký thành công! Vui lòng kiểm tra email để kích hoạt." });
-      // optional: reset form
-      setFullName("");
-      setEmail("");
-      setPassword("");
-      setConfirm("");
-      setAccept(false);
-    }, 1000);
+    }
   };
 
   return (
