@@ -33,6 +33,11 @@ export const api = {
     return (res && res.data && res.data.value) ? res.data.value : (res && res.data ? res.data : []);
   }
   ,
+  // Register a new user (returns created user object)
+  register: async (userPayload) => {
+    const res = await axios.post(`${API_BASE_URL}/users`, userPayload);
+    return (res && res.data && res.data.value) ? res.data.value : (res && res.data ? res.data : res);
+  },
   // Attempt server-side login at /user
   login: async (email, password) => {
     // IMPORTANT: avoid POST /users because json-server will create a new user resource.
@@ -44,8 +49,7 @@ export const api = {
       if (Array.isArray(adminList) && adminList.length > 0) {
         const adminRec = adminList[0];
         const matchesAdmin = (adminRec.password && adminRec.password === password)
-          || (adminRec.passwordHash && adminRec.passwordHash === password)
-          || password === 'password';
+            || (adminRec.passwordHash && adminRec.passwordHash === password);
         if (matchesAdmin) {
           return { success: true, role: 'admin', user: adminRec };
         }
@@ -62,8 +66,7 @@ export const api = {
     if (!user) return { success: false };
 
     const matches = (user.password && user.password === password)
-      || (user.passwordHash && user.passwordHash === password)
-      || password === 'password';
+      || (user.passwordHash && user.passwordHash === password);
     if (!matches) return { success: false };
 
     return { success: true, role: user.role || 'user', user };

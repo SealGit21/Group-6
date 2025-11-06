@@ -39,62 +39,24 @@ function Login() {
     if (Object.keys(v).length) return;
 
     setLoading(true);
-    // Try server-side login at /user (your updated API)
+    // Call server-side login: require exact match with database entries.
     try {
       const res = await api.login(email.trim().toLowerCase(), password);
-
-      // Expecting server to return something like { success: true, role: 'admin'|'user', user: {...} }
-      if (res) {
-        console.debug('api.login response:', res);
+      // Expecting { success: true, role: 'admin'|'user', user: {...} }
+      if (res && res.success) {
         const role = res.role || (res.user && res.user.role) || res.roleName || null;
-        console.debug('resolved role:', role);
+        const userObj = res.user || { email: email.trim().toLowerCase(), name: res.name || email };
+        localStorage.setItem('user', JSON.stringify(userObj));
+        window.dispatchEvent(new CustomEvent('userChanged', { detail: userObj }));
         if (role === 'admin' || role === 'Admin') {
-          const userObj = res.user || { email: email.trim().toLowerCase(), name: res.name || email };
-          localStorage.setItem('user', JSON.stringify(userObj));
-          // notify other components
-          window.dispatchEvent(new CustomEvent('userChanged', { detail: userObj }));
-          setStatus({ type: 'success', message: 'Đăng nhập admin thành công! Chuyển hướng...' });
-          setTimeout(() => {
-            setLoading(false);
-            navigate('/admin');
-          }, 400);
-          return;
-        }
-        if (role === 'user' || role === 'User' || role == null) {
-          const userObj = res.user || { email: email.trim().toLowerCase(), name: res.name || email };
-          localStorage.setItem('user', JSON.stringify(userObj));
-          window.dispatchEvent(new CustomEvent('userChanged', { detail: userObj }));
-          setStatus({ type: 'success', message: 'Đăng nhập thành công! Chuyển hướng...' });
-          setTimeout(() => {
-            setLoading(false);
-            navigate('/');
-          }, 400);
-          return;
-        }
-      }
-
-      // Fallback: if /user doesn't give role, try the old approach (get users/admins lists)
-      const [users, admins] = await Promise.all([api.getUsers().catch(()=>[]), api.getAdmins().catch(()=>[])]);
-      const emailLower = email.trim().toLowerCase();
-      const foundAdmin = admins.find((a) => a.email && a.email.toLowerCase() === emailLower);
-      if (foundAdmin) {
-        const matches = (foundAdmin.passwordHash && foundAdmin.passwordHash === password) || password === 'password';
-        if (matches) {
           setStatus({ type: 'success', message: 'Đăng nhập admin thành công! Chuyển hướng...' });
           setTimeout(() => { setLoading(false); navigate('/admin'); }, 400);
           return;
         }
+        setStatus({ type: 'success', message: 'Đăng nhập thành công! Chuyển hướng...' });
+        setTimeout(() => { setLoading(false); navigate('/'); }, 400);
+        return;
       }
-      const foundUser = users.find((u) => u.email && u.email.toLowerCase() === emailLower);
-      if (foundUser) {
-        const matches = (foundUser.passwordHash && foundUser.passwordHash === password) || password === 'password';
-        if (matches) {
-          setStatus({ type: 'success', message: 'Đăng nhập thành công! Chuyển hướng...' });
-          setTimeout(() => { setLoading(false); navigate('/'); }, 400);
-          return;
-        }
-      }
-
       setStatus({ type: 'danger', message: 'Email hoặc mật khẩu không đúng.' });
     } catch (err) {
       console.error('Login error', err);
