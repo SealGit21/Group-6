@@ -120,6 +120,28 @@ export default function Profile() {
     );
   }
 
+  // Kiểm tra nếu user null
+  if (!user) {
+    return (
+      <Container className="py-5">
+        <Alert variant="danger">
+          Không tìm thấy thông tin người dùng. Vui lòng <Alert.Link href="/login">đăng nhập</Alert.Link> lại.
+        </Alert>
+      </Container>
+    );
+  }
+
+  // Kiểm tra nếu là admin
+  if (user.role === 'admin') {
+    return (
+      <Container className="py-5">
+        <Alert variant="warning">
+          Tài khoản Admin không có trang Profile. Vui lòng truy cập <Alert.Link href="/admin">Admin Panel</Alert.Link>.
+        </Alert>
+      </Container>
+    );
+  }
+
   return (
     <Container className="py-5">
       <Row>

@@ -1,5 +1,5 @@
-import { Navbar, Container, Image, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Navbar, Nav, Container, FormControl, Form, Button, Image } from 'react-bootstrap';
+import { NavLink, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
 
@@ -22,9 +22,9 @@ function AdminHeader() {
     };
 
     return (
-        <Navbar bg="dark" variant="dark" expand="lg" style={{ height: '80px' }}>
+        <Navbar bg="dark" variant="dark" expand="lg" style={{ height: '70px' }}>
             <Container className="d-flex justify-content-between align-items-center">
-                <Navbar.Brand className="d-flex align-items-center" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
+                <Navbar.Brand as={NavLink} to="/" className="d-flex align-items-center">
                     <Image
                         src="/logo/thiet-ke-logo-shop-giay-19_1584095087.jpg"
                         alt="Logo"
@@ -33,39 +33,75 @@ function AdminHeader() {
                         roundedCircle
                         className="me-2"
                     />
-                    <span>ShoeShop</span>
+                    ShoeShop
                 </Navbar.Brand>
 
-                <div className="text-white">
-                    <span style={{ fontSize: '1.1rem' }}>ShoeShop Admin Panel</span>
-                </div>
+                <Nav className="mx-auto">
+                    <NavLink to="/" className="nav-link px-3" style={({ isActive }) => ({
+                        color: isActive ? 'red' : 'white', textDecoration: 'none', fontSize: '1.4rem',
+                    })}>Home</NavLink>
 
-                <div className="d-flex align-items-center">
-                    {user && (
-                        <span className="text-white me-3">
+                    <NavLink to="/products" className="nav-link px-3" style={({ isActive }) => ({
+                        color: isActive ? 'red' : 'white', textDecoration: 'none', fontSize: '1.4rem'
+                    })}>Products</NavLink>
+
+                    <NavLink to="/admin" className="nav-link px-3" style={({ isActive }) => ({
+                        color: isActive ? 'red' : 'white', textDecoration: 'none', fontSize: '1.4rem'
+                    })}>Admin Panel</NavLink>
+                </Nav>
+
+                <Form className="d-flex me-4">
+                    <FormControl className="me-2" type="text" placeholder="Search" />
+                </Form>
+
+                {user ? (
+                    <div className="d-flex align-items-center ms-3">
+                        {/* Admin không có profile button, chỉ hiển thị tên */}
+                        <span className="text-white me-3" style={{ fontSize: '1rem', fontWeight: '500' }}>
                             {user.name || user.email}
                         </span>
-                    )}
-                    <Button 
-                        variant="outline-light" 
-                        size="sm" 
-                        className="me-2"
-                        onClick={() => navigate('/')}
-                    >
-                        Về trang chủ
-                    </Button>
-                    <Button 
-                        variant="light" 
-                        size="sm"
-                        onClick={handleLogout}
-                    >
-                        Đăng xuất
-                    </Button>
-                </div>
+
+                        <Button variant="light" onClick={handleLogout}>Đăng xuất</Button>
+                    </div>
+                ) : (
+                    <div className="ms-3">
+                        <Button
+                            variant="outline-light"
+                            className="me-2"
+                            onClick={() => navigate('/login')}
+                        >
+                            Đăng nhập
+                        </Button>
+                        <Button variant="light" onClick={() => navigate('/register')}>
+                            Đăng ký
+                        </Button>
+                    </div>
+                )}
+
+                <NavLink to="/cart"
+                    onClick={(e) => {
+                        if (!user) {
+                            e.preventDefault();
+                            alert('Vui lòng đăng nhập trước khi xem giỏ hàng.');
+                            navigate('/login');
+                        } else {
+                            navigate('/cart');
+                        }
+                    }}
+                    className="ms-4"
+                    style={({ isActive }) => ({ color: isActive ? 'red' : 'white', textDecoration: 'none', fontSize: '1.4rem' })}>
+
+                    <Image
+                        src="/logo/cart.png"
+                        alt="Cart"
+                        width="35"
+                        height="35"
+                        className="me-1"
+                    />
+                </NavLink>
             </Container>
         </Navbar>
     );
 }
 
 export default AdminHeader;
-

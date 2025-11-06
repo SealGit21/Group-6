@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Header from './components/Header';
@@ -17,12 +18,24 @@ import Profile from './pages/Profile';
 import { CartProvider } from './components/CartContext';
 
 function App() {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
+
+  // Listen to user changes (login/logout)
+  useEffect(() => {
+    const onUserChanged = (e) => {
+      setUser(e.detail || JSON.parse(localStorage.getItem('user')) || null);
+    };
+    window.addEventListener('userChanged', onUserChanged);
+    return () => window.removeEventListener('userChanged', onUserChanged);
+  }, []);
+
   return (
     <Router>
       <CartProvider>
         <div className="d-flex flex-column min-vh-100">
 
-          <Header />
+          {/* Hiển thị AdminHeader nếu user là admin, ngược lại hiển thị Header thường */}
+          {user && user.role === 'admin' ? <AdminHeader /> : <Header />}
 
           <div className="container mt-4 flex-grow-1">
             <Routes>
