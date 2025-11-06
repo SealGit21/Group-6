@@ -15,6 +15,7 @@ function Home() {
       .catch((err) => console.error("Fetch error:", err));
   }, []);
 
+  // Danh sách highlight
   const newProducts = [...products]
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 5);
@@ -29,6 +30,7 @@ function Home() {
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 5);
 
+  // --- Hàm render danh sách ---
   const renderList = (list, sectionType) => (
     <Row className="g-3">
       {list.map((p) => (
@@ -131,12 +133,14 @@ function Home() {
     </Row>
   );
 
+  // --- Hàm render slide scroll cho các section ---
   const renderScrollableList = (list, sectionType, scrollPosition, setScrollPosition, buttonColor = "#667eea") => {
-    const itemWidth = 285; 
-    const gap = 15; 
+    const itemWidth = 285; // Width of each card
+    const gap = 15; // Gap between cards
     const totalItemWidth = itemWidth + gap;
     const visibleItems = 4;
 
+    // Calculate darker shade for hover
     const hexToRgb = (hex) => {
       const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
       return result ? {
@@ -163,15 +167,21 @@ function Home() {
     };
 
     const scrollRight = () => {
+      // Calculate the maximum scroll position to show the last item fully
+      // When we have 5 items and show 4, we need to scroll by 1 item width
+      // Total width of all items = list.length * totalItemWidth
+      // Visible width = visibleItems * totalItemWidth
+      // Max scroll = Total width - Visible width = (list.length - visibleItems) * totalItemWidth
       const maxScroll = Math.max(0, (list.length - visibleItems) * totalItemWidth);
       const newPosition = Math.min(maxScroll, scrollPosition + totalItemWidth);
       setScrollPosition(newPosition);
     };
     
+    // Calculate if we can scroll more to the right
     const canScrollRight = () => {
       if (list.length <= visibleItems) return false;
       const maxScroll = Math.max(0, (list.length - visibleItems) * totalItemWidth);
-      return scrollPosition < maxScroll - 1; 
+      return scrollPosition < maxScroll - 1; // Use -1 to account for rounding issues
     };
 
     return (
@@ -192,7 +202,7 @@ function Home() {
               gap: `${gap}px`,
               transform: `translateX(-${scrollPosition}px)`,
               transition: "transform 0.5s ease",
-              paddingRight: "20px", 
+              paddingRight: "20px", // Extra padding to ensure last item is fully visible
             }}
           >
             {list.map((p, index) => (
@@ -301,6 +311,7 @@ function Home() {
             ))}
           </div>
         </div>
+        {/* Navigation buttons */}
         {list.length > visibleItems && (
           <>
             {scrollPosition > 0 && (
@@ -393,10 +404,12 @@ function Home() {
     );
   };
 
+  // Get featured products for carousel
   const featuredProducts = products.slice(0, 5);
 
   return (
     <Container className="py-4">
+      {/* Carousel Section */}
       <div className="mb-5">
         <Carousel fade indicators={false} controls={true} interval={4000}>
           {featuredProducts.map((product, index) => (
@@ -442,6 +455,7 @@ function Home() {
                     }}
                   />
                 )}
+                {/* Product name and price overlay at bottom */}
                 <div
                   style={{
                     position: "absolute",
@@ -494,6 +508,7 @@ function Home() {
         </Carousel>
       </div>
 
+      {/* Sản phẩm mới Section */}
       <div
         className="mb-5"
         style={{
@@ -534,6 +549,7 @@ function Home() {
         {renderScrollableList(newProducts, "newProducts", scrollPositionNew, setScrollPositionNew, "#667eea")}
       </div>
 
+      {/* Giảm giá hấp dẫn Section */}
       <div
         className="mb-5"
         style={{
@@ -574,6 +590,7 @@ function Home() {
         {renderScrollableList(hotDeals, "hotDeals", scrollPositionHot, setScrollPositionHot, "#dc3545")}
       </div>
 
+      {/* Được đánh giá cao Section */}
       <div
         className="mb-5"
         style={{
