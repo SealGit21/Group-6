@@ -10,9 +10,11 @@ import {
   FormControl,
   Alert,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -37,15 +39,31 @@ function Login() {
     if (Object.keys(v).length) return;
 
     setLoading(true);
-    // TODO: gọi API thực tế ở đây
-    setTimeout(() => {
-      setLoading(false);
-      if (email === "user@example.com" && password === "password") {
-        setStatus({ type: "success", message: "Đăng nhập thành công!" });
-      } else {
-        setStatus({ type: "danger", message: "Email hoặc mật khẩu không đúng." });
+    // Call server-side login: require exact match with database entries.
+    try {
+      const res = await api.login(email.trim().toLowerCase(), password);
+      // Expecting { success: true, role: 'admin'|'user', user: {...} }
+      if (res && res.success) {
+        const role = res.role || (res.user && res.user.role) || res.roleName || null;
+        const userObj = res.user || { email: email.trim().toLowerCase(), name: res.name || email };
+        localStorage.setItem('user', JSON.stringify(userObj));
+        window.dispatchEvent(new CustomEvent('userChanged', { detail: userObj }));
+        if (role === 'admin' || role === 'Admin') {
+          setStatus({ type: 'success', message: 'Đăng nhập admin thành công! Chuyển hướng...' });
+          setTimeout(() => { setLoading(false); navigate('/admin'); }, 400);
+          return;
+        }
+        setStatus({ type: 'success', message: 'Đăng nhập thành công! Chuyển hướng...' });
+        setTimeout(() => { setLoading(false); navigate('/'); }, 400);
+        return;
       }
-    }, 900);
+      setStatus({ type: 'danger', message: 'Email hoặc mật khẩu không đúng.' });
+    } catch (err) {
+      console.error('Login error', err);
+      setStatus({ type: 'danger', message: 'Lỗi kết nối. Vui lòng thử lại.' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
