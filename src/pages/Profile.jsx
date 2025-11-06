@@ -96,13 +96,18 @@ export default function Profile() {
         address: editForm.address
       });
 
-      // Update local state
-      setUser(prev => ({
-        ...prev,
+      // Update local state and localStorage
+      const updatedUser = {
+        ...user,
         name: editForm.name,
         phone: editForm.phone,
         address: editForm.address
-      }));
+      };
+      setUser(updatedUser);
+      
+      // Update localStorage and notify header
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      window.dispatchEvent(new CustomEvent('userChanged', { detail: updatedUser }));
 
       setSuccess('Cập nhật thông tin thành công!');
       setEditing(false);
