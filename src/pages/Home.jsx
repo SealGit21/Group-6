@@ -27,7 +27,7 @@ function Home() {
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 5);
 
-  // --- Hàm render danh sách ---
+
   const renderList = (list) => (
     <Row className="g-3">
       {list.map((p) => (
