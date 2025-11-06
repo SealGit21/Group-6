@@ -46,6 +46,12 @@ function Header() {
                     <NavLink to="/products" className="nav-link px-3" style={({ isActive }) => ({
                         color: isActive ? 'red' : 'white', textDecoration: 'none', fontSize: '1.4rem'
                     })}>Products</NavLink>
+
+                    {user && user.role === 'admin' && (
+                        <NavLink to="/admin" className="nav-link px-3" style={({ isActive }) => ({
+                            color: isActive ? 'red' : 'white', textDecoration: 'none', fontSize: '1.4rem'
+                        })}>Admin Panel</NavLink>
+                    )}
                 </Nav>
 
                 <Form className="d-flex me-4">
