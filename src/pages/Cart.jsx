@@ -115,9 +115,42 @@ export default function Cart() {
 
   const total = calculateTotal(products);
 
-  const handleConfirmCart = () => {
-    navigate('/checkout');
+  const handleConfirmCart = async () => {
+    if (cartItems.length === 0) {
+      alert("Giỏ hàng trống");
+      return;
+    }
+
+    try {
+      const orderData = {
+        userId: 1,
+        items: cartItems.map(item => ({
+          productId: item.productId,
+          size: item.size,
+          quantity: item.quantity,
+        })),
+        subtotal: calculateTotal(products),
+        shipping: 30000,
+        total: calculateTotal(products) + 30000,
+        shippingAddress: "",
+        payment: {
+          method: "cod",
+          status: "unpaid"
+        },
+        status: "pending",
+        createdAt: new Date().toISOString()
+      };
+
+      const res = await axios.post("http://localhost:9999/orders", orderData);
+      localStorage.setItem("currentOrderId", res.data.id);
+
+      navigate("/checkout");
+    } catch (err) {
+      console.error("Không thể tạo đơn hàng:", err);
+      alert("Lỗi khi tạo đơn hàng!");
+    }
   };
+
 
   const handleIncrease = (item) => {
     const product = products.find(p => p.id === item.productId);
@@ -144,7 +177,7 @@ export default function Cart() {
   };
   return (
     <div className="cart-container">
-      <h1>Giỏ hàng của bạn</h1>
+      <h1>Giỏ hàng của bạn: {cartItems.length}</h1>
       {cartItems.length === 0 || products.length === 0 ? (
         <p>Chưa có sản phẩm nào</p>
       ) : (
@@ -184,7 +217,7 @@ export default function Cart() {
           </table>
 
           <div className="cart-summary" style={{ marginTop: '20px', textAlign: 'right' }}>
-            <p>{cartItems.length} sản phẩm</p>
+
             <p>Tổng: {total.toLocaleString()}đ</p>
             <input
               type="text"

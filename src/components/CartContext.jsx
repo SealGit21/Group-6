@@ -1,5 +1,5 @@
-import { createContext, useState } from 'react';
 
+import { createContext, useState, useEffect } from "react";
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
@@ -7,6 +7,11 @@ export function CartProvider({ children }) {
     const [discountCode, setDiscountCode] = useState('');
     const [userInfo, setUserInfo] = useState({});
     const [paymentMethod, setPaymentMethod] = useState('');
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) setUserInfo(JSON.parse(storedUser));
+    }, []);
 
     const addToCart = (productId, size, quantity = 1) => {
         setCartItems(prev => {

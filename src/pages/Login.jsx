@@ -49,7 +49,7 @@ function Login() {
         const role = res.role || (res.user && res.user.role) || res.roleName || null;
         console.debug('resolved role:', role);
         if (role === 'admin' || role === 'Admin') {
-          const userObj = res.user || { email: email.trim().toLowerCase(), name: res.name || email };
+          const userObj = res.user || {id: res.id || res.userId,  email: email.trim().toLowerCase(), name: res.name || email };
           localStorage.setItem('user', JSON.stringify(userObj));
           // notify other components
           window.dispatchEvent(new CustomEvent('userChanged', { detail: userObj }));

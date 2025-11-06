@@ -57,7 +57,7 @@ function Header() {
                     <div className="d-flex align-items-center ms-3">
                         {/* Profile button */}
                         <Button variant="outline-light" className="me-2" onClick={() => navigate('/profile')}>
-                            {user.name || user.email}
+                            {user.name}
                         </Button>
 
                         <Button variant="light" onClick={handleLogout}>Đăng xuất</Button>
