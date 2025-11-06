@@ -67,6 +67,59 @@ export const api = {
     if (!matches) return { success: false };
 
     return { success: true, role: user.role || 'user', user };
+  },
+
+//product them sua xoa
+  getProducts: async () => {
+    const res = await axios.get(`${API_BASE_URL}/products`);
+    return res.data;
+  },
+  
+  createProduct: async (productData) => {
+    const res = await axios.post(`${API_BASE_URL}/products`, productData);
+    return res.data;
+  },
+  
+  updateProduct: async (id, productData) => {
+    const res = await axios.put(`${API_BASE_URL}/products/${id}`, productData);
+    return res.data;
+  },
+  
+  deleteProduct: async (id) => {
+    const res = await axios.delete(`${API_BASE_URL}/products/${id}`);
+    return res.data;
+  },
+
+  //category them sua xoa
+  getCategories: async () => {
+    const res = await axios.get(`${API_BASE_URL}/categories`);
+    return res.data;
+  },
+  
+  createCategory: async (categoryData) => {
+    const res = await axios.post(`${API_BASE_URL}/categories`, categoryData);
+    return res.data;
+  },
+  
+  updateCategory: async (id, categoryData) => {
+    const res = await axios.put(`${API_BASE_URL}/categories/${id}`, categoryData);
+    return res.data;
+  },
+  
+  deleteCategory: async (id) => {
+    const res = await axios.delete(`${API_BASE_URL}/categories/${id}`);
+    return res.data;
+  },
+
+  //quan ly nguoi dung
+  updateUser: async (id, userData) => {
+    const res = await axios.patch(`${API_BASE_URL}/users/${id}`, userData);
+    return res.data;
+  },
+  
+  getUserOrders: async (userId) => {
+    const res = await axios.get(`${API_BASE_URL}/orders?userId=${userId}`);
+    return res.data;
   }
 };
 

@@ -1,7 +1,6 @@
 {
   "products": [
     {
-      "id": "1",
       "name": "Nike ZoomFly 5",
       "brand": "Nike",
       "categoryId": 1,
@@ -21,7 +20,7 @@
         "volt"
       ],
       "images": [
-        "/images/products/zoomfly5-1.jpg",
+        "https://static.nike.com/a/images/t_web_pdp_535_v2/f_auto/0f99f2ce-ef5e-42d1-a28c-1dd8f2316774/ZOOM+FLY+5+PRM.png",
         "/images/products/zoomfly5-2.jpg"
       ],
       "sizes": [
@@ -46,7 +45,8 @@
           "stock": 9
         }
       ],
-      "createdAt": "2025-10-13"
+      "createdAt": "2025-10-13",
+      "id": "1"
     },
     {
       "id": "2",
@@ -1145,7 +1145,8 @@
       "passwordHash": "$2b$10$examplehash",
       "phone": "+84123456789",
       "address": "123 Đường Lê Lợi, Hà Nội, 100000, Vietnam",
-      "createdAt": "2025-02-10T07:45:00Z"
+      "createdAt": "2025-02-10T07:45:00Z",
+      "status": "active"
     },
     {
       "id": "2",
@@ -1183,7 +1184,8 @@
       "name": "Admin Phụ",
       "email": "admin1@gmail.com",
       "passwordHash": "123456",
-      "createdAt": "2025-01-01T00:00:00Z"}
+      "createdAt": "2025-01-01T00:00:00Z"
+    }
   ],
   "orders": [
     {

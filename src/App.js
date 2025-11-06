@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
+import AdminHeader from './components/AdminHeader';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
@@ -8,10 +9,13 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminDashboard from './pages/AdminDashboard';
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
   return (
-    <Router>
-      <Header />
+    <>
+      {isAdminRoute ? <AdminHeader /> : <Header />}
       <div className="container mt-4">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -21,6 +25,14 @@ function App() {
           <Route path="/register" element={<Register/>}/>
         </Routes>
       </div>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }
