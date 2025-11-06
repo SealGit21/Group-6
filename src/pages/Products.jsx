@@ -38,6 +38,7 @@ function Products() {
       .catch((err) => console.error("Fetch error:", err));
   }, []);
 
+  // Get unique values for filters
   const brands = [...new Set(products.map((p) => p.brand))].sort();
   const genders = [...new Set(products.map((p) => p.gender))];
   const colors = [...new Set(products.flatMap((p) => p.colors || []))].sort();
@@ -45,6 +46,7 @@ function Products() {
     ...new Set(products.flatMap((p) => p.sizes?.map((s) => s.size) || [])),
   ].sort((a, b) => a - b);
 
+  // Filter products
   useEffect(() => {
     let filtered = [...products];
 
@@ -159,6 +161,7 @@ function Products() {
   return (
     <Container className="py-4">
       <Row>
+        {/* Filter Sidebar */}
         <Col md={3} className="mb-4">
           <div
             style={{
@@ -225,6 +228,7 @@ function Products() {
           </div>
         </Col>
 
+        {/* Products Grid */}
         <Col md={9}>
           <div style={{ marginBottom: "20px" }}>
             <h4>
@@ -245,6 +249,7 @@ function Products() {
                     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
                   }}
                 >
+                  {/* Image Section - 2/3 of card */}
                   <div
                     style={{
                       position: "relative",
@@ -331,6 +336,7 @@ function Products() {
                     )}
                   </div>
 
+                  {/* Product Details Section - 1/3 of card */}
                   <div
                     style={{
                       padding: "12px",
@@ -341,6 +347,7 @@ function Products() {
                       backgroundColor: "#fff",
                     }}
                   >
+                    {/* Product Name */}
                     <h6
                       style={{
                         fontSize: "16px",
@@ -353,6 +360,7 @@ function Products() {
                       {product.name}
                     </h6>
 
+                    {/* Pricing */}
                     <div style={{ marginBottom: "8px" }}>
                       {product.salePrice && product.salePrice < product.basePrice ? (
                         <>
@@ -389,6 +397,7 @@ function Products() {
                       )}
                     </div>
 
+                    {/* Rating */}
                     <div
                       style={{
                         display: "flex",
@@ -416,6 +425,7 @@ function Products() {
                       </span>
                     </div>
 
+                    {/* View Details Button */}
                     <Button
                       as={Link}
                       to={`/products/${product.id}`}
@@ -444,5 +454,4 @@ function Products() {
 }
 
 export default Products;
-
 
