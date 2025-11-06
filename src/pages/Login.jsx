@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Container,
   Row,
@@ -10,6 +10,8 @@ import {
   FormControl,
   Alert,
 } from "react-bootstrap";
+import { CartContext } from "../components/CartContext";
+
 import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 
@@ -21,6 +23,7 @@ function Login() {
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { setUserInfo } = useContext(CartContext);
 
   const validate = () => {
     const e = {};
@@ -45,8 +48,14 @@ function Login() {
       // Expecting { success: true, role: 'admin'|'user', user: {...} }
       if (res && res.success) {
         const role = res.role || (res.user && res.user.role) || res.roleName || null;
-        const userObj = res.user || { email: email.trim().toLowerCase(), name: res.name || email };
+        const userObj = {
+          id: res.user.id,
+          email: res.user.email || email.trim().toLowerCase(),
+          name: res.user.name || res.user.email || email
+        };
+
         localStorage.setItem('user', JSON.stringify(userObj));
+        setUserInfo(userObj);
         window.dispatchEvent(new CustomEvent('userChanged', { detail: userObj }));
         if (role === 'admin' || role === 'Admin') {
           setStatus({ type: 'success', message: 'Đăng nhập admin thành công! Chuyển hướng...' });
@@ -72,11 +81,11 @@ function Login() {
         <Col xs={11} sm={10} md={8} lg={6} xl={5}>
           <Card className="shadow-sm">
             <Row className="g-0">
-              <Col md={5} className="d-none d-md-flex align-items-center justify-content-center bg-dark text-white p-3" style={{backgroundImage:'linear-gradient(135deg,#111827, #1f2937)'}}>
+              <Col md={5} className="d-none d-md-flex align-items-center justify-content-center bg-dark text-white p-3" style={{ backgroundImage: 'linear-gradient(135deg,#111827, #1f2937)' }}>
                 <div className="text-center px-2">
                   <h4 className="mb-2">Sneaker Shop</h4>
                   {/* <p className="small">Giày thể thao chính hãng — phong cách & thoải mái</p> */}
-                  <div style={{width:120, height:120, borderRadius:16, background:"#fff2", display:"inline-block"}} />
+                  <div style={{ width: 120, height: 120, borderRadius: 16, background: "#fff2", display: "inline-block" }} />
                 </div>
               </Col>
 

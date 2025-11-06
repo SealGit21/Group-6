@@ -16,6 +16,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import Profile from './pages/Profile';
 
 import { CartProvider } from './components/CartContext';
+import Checkout from './pages/Checkout';
 
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
@@ -43,6 +44,7 @@ function App() {
               <Route path="/products/:id" element={<Detail />} />
               <Route path="/products" element={<Products />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/profile" element={<Profile />} />

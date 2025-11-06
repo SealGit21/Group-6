@@ -1288,6 +1288,90 @@
       },
       "status": "pending",
       "createdAt": "2025-11-06T04:06:03.973Z"
+    },
+    {
+      "id": "476c",
+      "userId": 1,
+      "items": [
+        {
+          "productId": 1,
+          "size": 41,
+          "quantity": 2
+        },
+        {
+          "productId": 2,
+          "size": 40,
+          "quantity": 6
+        }
+      ],
+      "subtotal": 24320000,
+      "shipping": 30000,
+      "total": 24350000,
+      "shippingAddress": "",
+      "payment": {
+        "method": "cod",
+        "status": "unpaid"
+      },
+      "status": "pending",
+      "createdAt": "2025-11-06T09:58:34.811Z"
+    },
+    {
+      "id": "80fa",
+      "userId": null,
+      "items": [],
+      "subtotal": 0,
+      "shipping": 30000,
+      "total": 30000,
+      "status": "undelivered",
+      "payment": {
+        "method": "qr",
+        "status": "paid",
+        "paidAt": "2025-11-06T09:59:29.182Z"
+      },
+      "shippingAddress": "Hà nội",
+      "createdAt": "2025-11-06T09:59:29.182Z"
+    },
+    {
+      "id": "132e",
+      "userId": 1,
+      "items": [
+        {
+          "productId": 1,
+          "size": 41,
+          "quantity": 2
+        },
+        {
+          "productId": 2,
+          "size": 40,
+          "quantity": 6
+        }
+      ],
+      "subtotal": 24320000,
+      "shipping": 30000,
+      "total": 24350000,
+      "shippingAddress": "",
+      "payment": {
+        "method": "cod",
+        "status": "unpaid"
+      },
+      "status": "pending",
+      "createdAt": "2025-11-06T10:05:18.262Z"
+    },
+    {
+      "id": "785d",
+      "userId": "3",
+      "items": [],
+      "subtotal": 0,
+      "shipping": 30000,
+      "total": 30000,
+      "status": "undelivered",
+      "payment": {
+        "method": "cod",
+        "status": "unpaid",
+        "paidAt": null
+      },
+      "shippingAddress": "Hà nội",
+      "createdAt": "2025-11-06T10:09:38.494Z"
     }
   ],
   "carts": [
