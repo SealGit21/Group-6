@@ -167,21 +167,15 @@ function Home() {
     };
 
     const scrollRight = () => {
-      // Calculate the maximum scroll position to show the last item fully
-      // When we have 5 items and show 4, we need to scroll by 1 item width
-      // Total width of all items = list.length * totalItemWidth
-      // Visible width = visibleItems * totalItemWidth
-      // Max scroll = Total width - Visible width = (list.length - visibleItems) * totalItemWidth
       const maxScroll = Math.max(0, (list.length - visibleItems) * totalItemWidth);
       const newPosition = Math.min(maxScroll, scrollPosition + totalItemWidth);
       setScrollPosition(newPosition);
     };
     
-    // Calculate if we can scroll more to the right
     const canScrollRight = () => {
       if (list.length <= visibleItems) return false;
       const maxScroll = Math.max(0, (list.length - visibleItems) * totalItemWidth);
-      return scrollPosition < maxScroll - 1; // Use -1 to account for rounding issues
+      return scrollPosition < maxScroll - 1; 
     };
 
     return (
@@ -202,7 +196,7 @@ function Home() {
               gap: `${gap}px`,
               transform: `translateX(-${scrollPosition}px)`,
               transition: "transform 0.5s ease",
-              paddingRight: "20px", // Extra padding to ensure last item is fully visible
+              paddingRight: "20px", 
             }}
           >
             {list.map((p, index) => (
