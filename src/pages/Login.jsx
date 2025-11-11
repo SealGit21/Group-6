@@ -10,7 +10,7 @@ import {
   FormControl,
   Alert,
 } from "react-bootstrap";
-import { CartContext } from "../components/CartContext";
+
 
 import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
@@ -23,7 +23,7 @@ function Login() {
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { setUserInfo } = useContext(CartContext);
+
 
   const validate = () => {
     const e = {};
@@ -55,7 +55,7 @@ function Login() {
         };
 
         localStorage.setItem('user', JSON.stringify(userObj));
-        setUserInfo(userObj);
+
         window.dispatchEvent(new CustomEvent('userChanged', { detail: userObj }));
         if (role === 'admin' || role === 'Admin') {
           setStatus({ type: 'success', message: 'Đăng nhập admin thành công! Chuyển hướng...' });

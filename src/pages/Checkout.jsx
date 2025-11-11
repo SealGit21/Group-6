@@ -1,228 +1,180 @@
-import { useContext, useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../components/CartContext';
 import axios from 'axios';
-export default function Checkout() {
-    const { cartItems, products, userInfo, setUserInfo, calculateTotal } = useContext(CartContext);
-    const [errors, setErrors] = useState({});
-    const [success, setSuccess] = useState(false);
-    const [showQR, setShowQR] = useState(false);
+import { Container, Row, Col, Form, Button, Card, ListGroup, Alert } from 'react-bootstrap';
 
-    const navigate = useNavigate();
+export default function Checkout({ userId }) {
+  const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [form, setForm] = useState({ name: '', email: '', phone: '', address: '' });
+  const [paymentMethod, setPaymentMethod] = useState('cod');
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [alert, setAlert] = useState({ show: false, message: '' });
 
-    const [form, setForm] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        address: ''
-    });
-    const [paymentMethod, setPaymentMethod] = useState('cod'); // cod / qr
+  // Lấy userId từ localStorage nếu chưa có
+  const uid = userId || JSON.parse(localStorage.getItem('user') || '{}')?.id;
 
-    // useEffect(() => {
-    //     if (userInfo) {
-    //         setForm({
-    //             name: userInfo.name || '',
-    //             email: userInfo.email || '',
-    //             phone: userInfo.phone || '',
-    //             address: userInfo.address || ''
-    //         });
-    //     }
-    // }, [userInfo]);
+  // Fetch giỏ hàng và sản phẩm
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!uid) {
+        setAlert({ show: true, message: 'Vui lòng đăng nhập để thanh toán' });
+        setLoading(false);
+        return;
+      }
+      try {
+        const cartRes = await axios.get(`http://localhost:9999/carts?userId=${uid}`);
+        setCartItems(cartRes.data);
 
-    const handleChange = (e) => {
-        setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+        const prodRes = await axios.get('http://localhost:9999/products');
+        setProducts(prodRes.data);
+
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setAlert({ show: true, message: 'Lỗi khi lấy dữ liệu' });
+        setLoading(false);
+      }
     };
+    fetchData();
+  }, [uid]);
 
-    const total = calculateTotal(products || []);
+  const calculateTotal = () => {
+    return cartItems.reduce((sum, item) => {
+      const product = products.find(p => p.id === item.productId);
+      if (!product) return sum;
+      const price = product.salePrice ?? product.basePrice;
+      return sum + price * item.quantity;
+    }, 0) + 30000;
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleChange = (e) => {
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-        const newErrors = {};
-        for (let key in form) {
-            if (!form[key].trim()) newErrors[key] = `Vui lòng nhập ${key}`;
-        }
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-            return;
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.phone || !form.address) {
+      setAlert({ show: true, message: 'Vui lòng điền đầy đủ thông tin' });
+      return;
+    }
 
-        setUserInfo(form);
-        setErrors({});
+    try {
+      const orderData = {
+        userId: uid,
+        items: cartItems.map(i => ({ productId: i.productId, size: i.size, quantity: i.quantity })),
+        subtotal: calculateTotal() - 30000,
+        shipping: 30000,
+        total: calculateTotal(),
+        shippingAddress: form.address,
+        payment: { method: paymentMethod, status: paymentMethod === 'qr' ? 'paid' : 'unpaid' },
+        status: 'pending',
+        createdAt: new Date().toISOString()
+      };
 
-        if (paymentMethod === "qr" && !showQR) {
-            setShowQR(true);
-            return;
-        }
+      await axios.post('http://localhost:9999/orders', orderData);
 
-        try {
-            const now = new Date().toISOString();
-            const subtotal = calculateTotal(products);
-            const order = {
-                userId: userInfo?.id || null,
-                items: cartItems.map((item) => ({
-                    productId: item.productId,
-                    size: item.size,
-                    quantity: item.quantity,
-                    unitPrice:
-                        products.find((p) => p.id === item.productId)?.salePrice ??
-                        products.find((p) => p.id === item.productId)?.basePrice,
-                })),
-                subtotal,
-                shipping: 30000,
-                total: subtotal + 30000,
-                status: "undelivered",
-                payment: {
-                    method: paymentMethod,
-                    status: paymentMethod === "qr" ? "paid" : "unpaid",
-                    paidAt: paymentMethod === "qr" ? now : null,
-                },
-                shippingAddress: form.address,
-                createdAt: now,
-            };
+      // Xóa cart trên server
+      await Promise.all(cartItems.map(item => axios.delete(`http://localhost:9999/carts/${item.id}`)));
+      setCartItems([]);
+      window.dispatchEvent(new Event('cartUpdated'));
 
-            // thêm đơn hàng
-            await axios.post("http://localhost:9999/orders", order);
+      setSuccess(true);
+    } catch (err) {
+      console.error(err);
+      setAlert({ show: true, message: 'Có lỗi khi tạo đơn hàng' });
+    }
+  };
 
-            // cập nhật stock
-            for (const item of cartItems) {
-                const product = products.find((p) => p.id === item.productId);
-                if (product) {
-                    await axios.patch(`http://localhost:9999/products/${product.id}`, {
-                        stock: product.stock - item.quantity,
-                    });
-                }
-            }
+  if (loading) return <Container className="py-5">Đang tải...</Container>;
 
-            setSuccess(true);
-        } catch (err) {
-            console.error("Error submitting order:", err);
-        }
-    };
-
-
-
+  if (success) {
     return (
-        <div className="container" style={{ maxWidth: '900px' }}>
-            <h1 className="text-center mb-2">Checkout</h1>
-
-            {!success ? (
-                <form onSubmit={handleSubmit}>
-                    <h4 className="mb-3">Thông tin khách hàng</h4>
-
-                    <div className="row mb-3 align-items-center">
-                        <label htmlFor="name" className="col-sm-2 col-form-label">Họ và Tên:</label>
-                        <div className="col-sm-6">
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="name"
-                                name="name"
-                                value={form.name}
-                                onChange={handleChange}
-                                placeholder="Nhập họ và tên"
-                            />
-                            {errors.name && <div className="text-danger small mt-1">{errors.name}</div>}
-                        </div>
-                    </div>
-
-                    <div className="row mb-3 align-items-center">
-                        <label htmlFor="email" className="col-sm-2 col-form-label">Email:</label>
-                        <div className="col-sm-6">
-                            <input
-                                type="email"
-                                className="form-control"
-                                id="email"
-                                name="email"
-                                value={form.email}
-                                onChange={handleChange}
-                                placeholder="Nhập email"
-                            />
-                            {errors.email && <div className="text-danger small mt-1">{errors.email}</div>}
-                        </div>
-                    </div>
-
-                    <div className="row mb-3 align-items-center">
-                        <label htmlFor="phone" className="col-sm-2 col-form-label">Số điện thoại:</label>
-                        <div className="col-sm-3">
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="phone"
-                                name="phone"
-                                value={form.phone}
-                                onChange={handleChange}
-                                placeholder="Nhập số điện thoại"
-                            />
-                            {errors.phone && <div className="text-danger small mt-1">{errors.phone}</div>}
-                        </div>
-                    </div>
-
-                    <div className="row mb-3 align-items-center">
-                        <label htmlFor="address" className="col-sm-2 col-form-label">Địa chỉ:</label>
-                        <div className="col-sm-9">
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="address"
-                                name="address"
-                                value={form.address}
-                                onChange={handleChange}
-                                placeholder="Nhập địa chỉ"
-                            />
-                            {errors.address && <div className="text-danger small mt-1">{errors.address}</div>}
-                        </div>
-                    </div>
-
-                    <p className="fw-bold fs-5">Tổng cộng: {total.toLocaleString()}đ</p>
-                    <br />
-                    <h4>Phương thức thanh toán</h4>
-
-                    <div className="form-check">
-                        <input
-                            className="form-check-input"
-                            type="radio"
-                            name="payment"
-                            value="cod"
-                            checked={paymentMethod === 'cod'}
-                            onChange={() => setPaymentMethod('cod')}
-                            id="cod"
-                        />
-                        <label className="form-check-label" htmlFor="cod">Thanh toán COD</label>
-                    </div>
-
-                    <div className="form-check">
-                        <input
-                            className="form-check-input"
-                            type="radio"
-                            name="payment"
-                            value="qr"
-                            checked={paymentMethod === 'qr'}
-                            onChange={() => setPaymentMethod('qr')}
-                            id="qr"
-                        />
-                        <label className="form-check-label" htmlFor="qr">Thanh toán qua QR</label>
-                    </div>
-
-                    {paymentMethod === 'qr' && showQR && (
-                        <div className="text-center mt-3">
-                            <img src="/QR.png" alt="QR Code thanh toán" style={{ width: '200px' }} />
-                            <p className="mt-2 text-muted">Quét mã để thanh toán, sau đó ấn lại nút xác nhận</p>
-                        </div>
-                    )}
-
-                    <div className="text-center">
-                        <button type="submit" className="btn btn-primary mb-3">Xác nhận thanh toán</button>
-                    </div>
-                </form>
-            ) : (
-                <div className="text-center mt-4">
-                    <h5 className="text-success">Đặt hàng thành công!</h5>
-                    <button className="btn btn-secondary mt-2" onClick={() => navigate('/')}>
-                        Quay lại trang chủ
-                    </button>
-                </div>
-            )}
-        </div>
+      <Container className="py-5 text-center">
+        <h3>Đặt hàng thành công!</h3>
+        <Button className="mt-3" onClick={() => navigate('/')}>Quay lại trang chủ</Button>
+      </Container>
     );
+  }
+
+  return (
+    <Container className="py-4">
+      <h1 className="mb-4">Thanh toán</h1>
+      {alert.show && <Alert variant="danger" onClose={() => setAlert({ show: false, message: '' })} dismissible>{alert.message}</Alert>}
+      <Row>
+        <Col md={6}>
+          <Card className="p-3 mb-4">
+            <h5>Thông tin giao hàng</h5>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label>Họ và tên</Form.Label>
+                <Form.Control name="name" value={form.name} onChange={handleChange} placeholder="Họ và tên" />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Email</Form.Label>
+                <Form.Control name="email" value={form.email} onChange={handleChange} placeholder="Email" />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Số điện thoại</Form.Label>
+                <Form.Control name="phone" value={form.phone} onChange={handleChange} placeholder="Số điện thoại" />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Địa chỉ</Form.Label>
+                <Form.Control name="address" value={form.address} onChange={handleChange} placeholder="Địa chỉ" />
+              </Form.Group>
+
+              <h5 className="mt-4">Phương thức thanh toán</h5>
+              <Form.Check type="radio" label="COD" name="payment" checked={paymentMethod === 'cod'} onChange={() => setPaymentMethod('cod')} />
+              <Form.Check type="radio" label="QR" name="payment" checked={paymentMethod === 'qr'} onChange={() => setPaymentMethod('qr')} />
+
+              <Button type="submit" className="mt-3" variant="primary">Xác nhận thanh toán</Button>
+            </Form>
+          </Card>
+        </Col>
+
+        <Col md={6}>
+          <Card className="p-3 mb-4">
+            <h5>Giỏ hàng</h5>
+            {cartItems.length === 0 ? (
+              <Alert variant="info">Giỏ hàng trống</Alert>
+            ) : (
+              <ListGroup variant="flush">
+                {cartItems.map(item => {
+                  const product = products.find(p => p.id === item.productId);
+                  if (!product) return null;
+                  const price = product.salePrice ?? product.basePrice;
+                  return (
+                    <ListGroup.Item key={item.id} className="d-flex justify-content-between">
+                      <div>{product.name} ({item.size}) x {item.quantity}</div>
+                      <div>{(price * item.quantity).toLocaleString()}đ</div>
+                    </ListGroup.Item>
+                  );
+                })}
+              </ListGroup>
+            )}
+            {cartItems.length > 0 && (
+              <>
+                <hr />
+                <div className="d-flex justify-content-between">
+                  <strong>Tạm tính:</strong>
+                  <span>{(calculateTotal() - 30000).toLocaleString()}đ</span>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <strong>Phí vận chuyển:</strong>
+                  <span>30,000đ</span>
+                </div>
+                <hr />
+                <div className="d-flex justify-content-between">
+                  <strong>Tổng cộng:</strong>
+                  <span>{calculateTotal().toLocaleString()}đ</span>
+                </div>
+              </>
+            )}
+          </Card>
+        </Col>
+      </Row>
+    </Container>
+  );
 }

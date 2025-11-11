@@ -14,13 +14,13 @@ import Register from './pages/Register';
 import AdminDashboard from './pages/AdminDashboard';
 import Profile from './pages/Profile';
 
-import { CartProvider } from './components/CartContext';
+
 import Checkout from './pages/Checkout';
 
 function App() {
   return (
     <Router>
-      <CartProvider>
+
         <div className="d-flex flex-column min-vh-100">
 
           <Header />
@@ -43,7 +43,7 @@ function App() {
           <Footer />
 
         </div>
-      </CartProvider>
+
     </Router>
   );
 }

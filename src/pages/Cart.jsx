@@ -1,235 +1,162 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../components/CartContext';
-
 import axios from 'axios';
+import { Table, Button, Image, Container, Row, Col, Alert } from 'react-bootstrap';
 
 export default function Cart() {
-  const { cartItems, addToCart, removeFromCart, updateCartItemQuantity, discountCode, setDiscountCode, calculateTotal } = useContext(CartContext);
+  const [cartItems, setCartItems] = useState([]);
   const [products, setProducts] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Lấy userId từ localStorage
   useEffect(() => {
-    setProducts([
-      {
-        "id": 1,
-        "name": "Nike ZoomFly 5",
-        "brand": "Nike",
-        "categoryId": 1,
-        "gender": "unisex",
-        "description": "Giày chạy tốc độ với đế ZoomX cho độ nảy cao.",
-        "basePrice": 3690000,
-        "salePrice": 3190000,
-        "rating": 4.8,
-        "tags": [
-          "running",
-          "speed",
-          "lightweight"
-        ],
-        "colors": [
-          "white",
-          "black",
-          "volt"
-        ],
-        "images": [
-          "/images/products/zoomfly5-1.jpg",
-          "/images/products/zoomfly5-2.jpg"
-        ],
-        "sizes": [
-          {
-            "size": 38,
-            "stock": 10
-          },
-          {
-            "size": 39,
-            "stock": 8
-          },
-          {
-            "size": 40,
-            "stock": 7
-          },
-          {
-            "size": 41,
-            "stock": 6
-          },
-          {
-            "size": 42,
-            "stock": 9
-          }
-        ],
-        "createdAt": "2025-10-13"
-      },
-      {
-        "id": 2,
-        "name": "Adidas Adizero SL",
-        "brand": "Adidas",
-        "categoryId": 1,
-        "gender": "men",
-        "description": "Cấu trúc Lightstrike cho cảm giác nhẹ và nhanh.",
-        "basePrice": 2990000,
-        "salePrice": null,
-        "rating": 4.6,
-        "tags": [
-          "running",
-          "training"
-        ],
-        "colors": [
-          "black",
-          "orange"
-        ],
-        "images": [
-          "/images/products/adizero-sl-1.jpg",
-          "/images/products/adizero-sl-2.jpg"
-        ],
-        "sizes": [
-          {
-            "size": 39,
-            "stock": 12
-          },
-          {
-            "size": 40,
-            "stock": 7
-          },
-          {
-            "size": 41,
-            "stock": 6
-          },
-          {
-            "size": 42,
-            "stock": 5
-          },
-          {
-            "size": 43,
-            "stock": 4
-          }
-        ],
-        "createdAt": "2025-10-12"
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        setUserId(user.id);
+      } catch (err) {
+        console.error('Lỗi parsing user:', err);
       }
-    ]);
-    axios.get('/products')
-      .then(res => setProducts(res.data.products))
-      .catch(err => console.error(err));
-    addToCart(1, 41, 1);
-    addToCart(2, 40, 3);
+    }
   }, []);
 
-  const total = calculateTotal(products);
-
-  const handleConfirmCart = async () => {
-    if (cartItems.length === 0) {
-      alert("Giỏ hàng trống");
-      return;
-    }
-
+  // Lấy giỏ hàng
+  const fetchCart = async () => {
+    if (!userId) return;
+    setLoading(true);
     try {
-      const orderData = {
-        userId: 1,
-        items: cartItems.map(item => ({
-          productId: item.productId,
-          size: item.size,
-          quantity: item.quantity,
-        })),
-        subtotal: calculateTotal(products),
-        shipping: 30000,
-        total: calculateTotal(products) + 30000,
-        shippingAddress: "",
-        payment: {
-          method: "cod",
-          status: "unpaid"
-        },
-        status: "pending",
-        createdAt: new Date().toISOString()
-      };
-
-      const res = await axios.post("http://localhost:9999/orders", orderData);
-      localStorage.setItem("currentOrderId", res.data.id);
-
-      navigate("/checkout");
+      const res = await axios.get(`http://localhost:9999/carts?userId=${userId}`);
+      setCartItems(res.data);
     } catch (err) {
-      console.error("Không thể tạo đơn hàng:", err);
-      alert("Lỗi khi tạo đơn hàng!");
+      console.error('Lỗi khi lấy giỏ hàng:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
-
-  const handleIncrease = (item) => {
-    const product = products.find(p => p.id === item.productId);
-    if (!product) return;
-
-    const sizeInfo = product.sizes.find(s => s.size === item.size);
-    if (!sizeInfo) return;
-
-    if (item.quantity + 1 > sizeInfo.stock) {
-      alert(`Sản phẩm chỉ còn ${sizeInfo.stock} trong kho!`);
-      return;
+  // Lấy danh sách sản phẩm
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get('http://localhost:9999/products');
+      setProducts(res.data);
+    } catch (err) {
+      console.error('Lỗi khi lấy sản phẩm:', err);
     }
-
-    updateCartItemQuantity(item.productId, item.size, item.quantity + 1);
   };
 
-  const handleDecrease = (item) => {
-    if (item.quantity - 1 <= 0) {
-      removeFromCart(item.productId, item.size);
-      return;
+  useEffect(() => {
+    if (userId) {
+      fetchCart();
+      fetchProducts();
     }
+  }, [userId]);
 
-    updateCartItemQuantity(item.productId, item.size, item.quantity - 1);
+  useEffect(() => {
+    const handleCartUpdated = () => fetchCart();
+    window.addEventListener('cartUpdated', handleCartUpdated);
+    return () => window.removeEventListener('cartUpdated', handleCartUpdated);
+  }, [userId]);
+
+  const calculateTotal = () => {
+    return cartItems.reduce((sum, item) => {
+      const product = products.find(p => p.id === item.productId);
+      if (!product) return sum;
+      const price = product.salePrice ?? product.basePrice;
+      return sum + price * item.quantity;
+    }, 0);
   };
+
+  const updateQuantity = async (item, newQty) => {
+    try {
+      if (newQty <= 0) {
+        await axios.delete(`http://localhost:9999/carts/${item.id}`);
+      } else {
+        await axios.patch(`http://localhost:9999/carts/${item.id}`, { quantity: newQty });
+      }
+      fetchCart();
+    } catch (err) {
+      console.error('Lỗi khi cập nhật số lượng:', err);
+    }
+  };
+
+  if (!userId) return <Alert variant="warning">Vui lòng đăng nhập để xem giỏ hàng</Alert>;
+  if (loading) return <p>Đang tải giỏ hàng...</p>;
+
   return (
-    <div className="cart-container">
-      <h1>Giỏ hàng của bạn: {cartItems.length}</h1>
-      {cartItems.length === 0 || products.length === 0 ? (
-        <p>Chưa có sản phẩm nào</p>
+    <Container className="py-4">
+      <h2 className="mb-4">Giỏ hàng của bạn</h2>
+
+      {cartItems.length === 0 ? (
+        <Alert variant="info">Chưa có sản phẩm nào trong giỏ hàng.</Alert>
       ) : (
         <>
-          <table className="table table-bordered table-hover">
-            <thead>
-              <tr >
-                <th style={{ textAlign: 'center' }}>Ảnh</th>
-                <th style={{ textAlign: 'center' }}>Tên sản phẩm</th>
-                <th style={{ textAlign: 'center' }}>Size</th>
-                <th style={{ textAlign: 'center' }}>Số lượng</th>
-                <th style={{ textAlign: 'center' }}>Giá</th>
-                <th style={{ textAlign: 'center' }}>Tổng</th>
+          <Table responsive bordered hover>
+            <thead className="table-dark text-center">
+              <tr>
+                <th>Ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Size</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Tổng</th>
+                <th>Thao tác</th>
               </tr>
             </thead>
             <tbody>
-              {cartItems.map((item, idx) => {
+              {cartItems.map(item => {
                 const product = products.find(p => p.id === item.productId);
                 if (!product) return null;
                 const price = product.salePrice ?? product.basePrice;
                 return (
-                  <tr key={idx} style={{ borderBottom: '1px solid #eee', textAlign: 'center' }}>
-                    <td><img src={product.image} alt={product.name} style={{ width: '80px' }} /></td>
-                    <td style={{ textAlign: 'center' }}>{product.name}</td>
-                    <td style={{ textAlign: 'center' }}>{item.size}</td>
-                    <td >
-                      <button onClick={() => handleDecrease(item)} style={{ marginRight: '5px' }}>−</button>
-                      {item.quantity}
-                      <button onClick={() => handleIncrease(item)} style={{ marginLeft: '5px' }}>+</button>
+                  <tr key={item.id} className="align-middle text-center">
+                    <td>
+                      <Image src={product.image} width="80" rounded />
+                    </td>
+                    <td className="text-start">{product.name}</td>
+                    <td>{item.size}</td>
+                    <td>
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() => updateQuantity(item, item.quantity - 1)}
+                      >−</Button>
+                      <span className="mx-2">{item.quantity}</span>
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() => updateQuantity(item, item.quantity + 1)}
+                      >+</Button>
                     </td>
                     <td>{price.toLocaleString()}đ</td>
                     <td>{(price * item.quantity).toLocaleString()}đ</td>
+                    <td>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => updateQuantity(item, 0)}
+                      >
+                        Xóa
+                      </Button>
+                    </td>
                   </tr>
                 );
               })}
             </tbody>
-          </table>
+          </Table>
 
-          <div className="cart-summary" style={{ marginTop: '20px', textAlign: 'right' }}>
-
-            <p>Tổng: {total.toLocaleString()}đ</p>
-            <input
-              type="text"
-              placeholder="Mã giảm giá"
-              value={discountCode}
-              onChange={e => setDiscountCode(e.target.value)}
-              style={{ marginRight: '10px' }}
-            />
-            <button onClick={handleConfirmCart}>Thanh toán</button>
-          </div>
+          <Row className="justify-content-end mt-4">
+            <Col xs="12" md="4" className="text-end">
+              <h4>Tổng tiền: <span className="text-danger">{calculateTotal().toLocaleString()}đ</span></h4>
+              <Button variant="success" size="lg" className="mt-3 w-100" onClick={() => navigate('/checkout')}>
+                Thanh toán
+              </Button>
+            </Col>
+          </Row>
         </>
       )}
-    </div>
+    </Container>
   );
 }

@@ -1372,19 +1372,71 @@
       },
       "shippingAddress": "Hà nội",
       "createdAt": "2025-11-06T10:09:38.494Z"
+    },
+    {
+      "id": "3733",
+      "userId": "3",
+      "items": [
+        {
+          "productId": "1",
+          "size": 39,
+          "quantity": 2
+        },
+        {
+          "productId": "2",
+          "size": 40,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 9370000,
+      "shipping": 30000,
+      "total": 9400000,
+      "shippingAddress": "Hà nội",
+      "payment": {
+        "method": "qr",
+        "status": "paid"
+      },
+      "status": "pending",
+      "createdAt": "2025-11-11T06:04:36.299Z"
+    },
+    {
+      "id": "a9c5",
+      "userId": "3",
+      "items": [
+        {
+          "productId": "1",
+          "size": 40,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 3190000,
+      "shipping": 30000,
+      "total": 3220000,
+      "shippingAddress": "Hà nội",
+      "payment": {
+        "method": "cod",
+        "status": "unpaid"
+      },
+      "status": "pending",
+      "createdAt": "2025-11-11T06:14:57.447Z"
     }
   ],
   "carts": [
     {
-      "userId": 2,
+      "id": "1",
+      "userId": 1,
       "items": [
         {
           "productId": 1,
           "size": 40,
           "quantity": 1
+        },
+        {
+          "productId": 2,
+          "size": 41,
+          "quantity": 2
         }
-      ],
-      "id": "527e"
+      ]
     }
   ],
   "reviews": [
