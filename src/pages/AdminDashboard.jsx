@@ -4,6 +4,7 @@ import { api } from '../services/api';
 import ProductFormModal from './admin/ProductFormModal';
 import CategoryFormModal from './admin/CategoryFormModal';
 import UserHistoryModal from './admin/UserHistoryModal';
+import OrderFormModal from './admin/OrderFormModal';
 
 function AdminDashboard() {
   const [data, setData] = useState({
@@ -16,7 +17,7 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   
-  // Product Modal State
+  //modal san pham
   const [showProductModal, setShowProductModal] = useState(false);
   const [editProductMode, setEditProductMode] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -35,17 +36,25 @@ function AdminDashboard() {
     sizes: [{ size: 38, stock: 0 }]
   });
 
-  // Category Modal State
+  //modal danh muc
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [editCategoryMode, setEditCategoryMode] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [categoryForm, setCategoryForm] = useState({ name: '' });
 
-  // User History Modal State
+  //modal lich su mua hang
   const [showUserHistoryModal, setShowUserHistoryModal] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
-  // Alert State
+  //modal sua don hang
+  const [showOrderModal, setShowOrderModal] = useState(false);
+  const [currentOrder, setCurrentOrder] = useState(null);
+  const [orderForm, setOrderForm] = useState({
+    status: '',
+    paymentStatus: ''
+  });
+
+  //alert
   const [alert, setAlert] = useState(null);
 
   useEffect(() => {
@@ -70,7 +79,7 @@ function AdminDashboard() {
     setTimeout(() => setAlert(null), 3000);
   };
 
-  // ========== PRODUCT CRUD HANDLERS ==========
+  //quan ly san pham
   const handleShowProductModal = (product = null) => {
     if (product) {
       setEditProductMode(true);
@@ -188,13 +197,47 @@ function AdminDashboard() {
     }
   };
 
-  // ========== USER MANAGEMENT HANDLERS ==========
+  //quan ly don hang
+  const handleShowOrderModal = (order) => {
+    setCurrentOrder(order);
+    setOrderForm({
+      status: order.status,
+      paymentStatus: order.payment.status
+    });
+    setShowOrderModal(true);
+  };
+
+  const handleOrderFormChange = (e) => {
+    const { name, value } = e.target;
+    setOrderForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleOrderSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await api.updateOrder(currentOrder.id, {
+        status: orderForm.status,
+        payment: {
+          ...currentOrder.payment,
+          status: orderForm.paymentStatus
+        }
+      });
+      showAlert('success', 'Cập nhật đơn hàng thành công!');
+      setShowOrderModal(false);
+      fetchData();
+    } catch (error) {
+      console.error('Lỗi:', error);
+      showAlert('danger', 'Không thể cập nhật đơn hàng!');
+    }
+  };
+
+  //quan ly nguoi dung
   const handleShowUserHistory = (user) => {
     setCurrentUser(user);
     setShowUserHistoryModal(true);
   };
 
-  // ========== CATEGORY CRUD HANDLERS ==========
+  // quan ly danh muc
   const handleShowCategoryModal = (category = null) => {
     if (category) {
       setEditCategoryMode(true);
@@ -239,7 +282,7 @@ function AdminDashboard() {
     }
   };
 
-  // Tính toán thống kê
+  //tinh toan thong ke
   const totalRevenue = data.orders.reduce((sum, order) => sum + order.total, 0);
   const totalProducts = data.products.length;
   const totalOrders = data.orders.length;
@@ -418,6 +461,7 @@ function AdminDashboard() {
                 <th>Thanh toán</th>
                 <th>Trạng thái</th>
                 <th>Ngày đặt</th>
+                <th>Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -433,6 +477,15 @@ function AdminDashboard() {
                     <td>{getPaymentStatusBadge(order.payment.status)}</td>
                     <td>{getStatusBadge(order.status)}</td>
                     <td>{new Date(order.createdAt).toLocaleDateString('vi-VN')}</td>
+                    <td>
+                      <Button 
+                        variant="warning" 
+                        size="sm"
+                        onClick={() => handleShowOrderModal(order)}
+                      >
+                        Sửa
+                      </Button>
+                    </td>
                   </tr>
                 );
               })}
@@ -457,7 +510,6 @@ function AdminDashboard() {
                 <th>Email</th>
                 <th>Điện thoại</th>
                 <th>Địa chỉ</th>
-                <th>Trạng thái</th>
                 <th>Ngày đăng ký</th>
                 <th>Lịch sử</th>
               </tr>
@@ -470,11 +522,6 @@ function AdminDashboard() {
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
                   <td>{user.address || 'Chưa cập nhật'}</td>
-                  <td>
-                    <Badge bg={user.status === 'active' ? 'success' : 'danger'}>
-                      {user.status === 'active' ? 'Hoạt động' : 'Bị khóa'}
-                    </Badge>
-                  </td>
                   <td>{new Date(user.createdAt).toLocaleDateString('vi-VN')}</td>
                   <td>
                     <Button 
@@ -577,6 +624,17 @@ function AdminDashboard() {
         </Col>
       </Row>
       )}
+
+      {/* Modal Cập nhật Đơn hàng */}
+      <OrderFormModal
+        show={showOrderModal}
+        onHide={() => setShowOrderModal(false)}
+        order={currentOrder}
+        users={data.users}
+        formData={orderForm}
+        onInputChange={handleOrderFormChange}
+        onSubmit={handleOrderSubmit}
+      />
 
       {/* Modal Thêm/Sửa Sản phẩm */}
       <ProductFormModal

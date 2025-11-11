@@ -1244,7 +1244,7 @@
         "method": "cod",
         "status": "unpaid"
       },
-      "status": "pending",
+      "status": "cancelled",
       "createdAt": "2025-11-06T03:58:58.669Z"
     },
     {

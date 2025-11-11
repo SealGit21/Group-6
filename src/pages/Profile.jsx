@@ -96,13 +96,18 @@ export default function Profile() {
         address: editForm.address
       });
 
-      // Update local state
-      setUser(prev => ({
-        ...prev,
+      // Update local state and localStorage
+      const updatedUser = {
+        ...user,
         name: editForm.name,
         phone: editForm.phone,
         address: editForm.address
-      }));
+      };
+      setUser(updatedUser);
+      
+      // Update localStorage and notify header
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      window.dispatchEvent(new CustomEvent('userChanged', { detail: updatedUser }));
 
       setSuccess('Cập nhật thông tin thành công!');
       setEditing(false);
@@ -116,6 +121,28 @@ export default function Profile() {
     return (
       <Container className="py-5">
         <div className="text-center">Đang tải...</div>
+      </Container>
+    );
+  }
+
+  // Kiểm tra nếu user null
+  if (!user) {
+    return (
+      <Container className="py-5">
+        <Alert variant="danger">
+          Không tìm thấy thông tin người dùng. Vui lòng <Alert.Link href="/login">đăng nhập</Alert.Link> lại.
+        </Alert>
+      </Container>
+    );
+  }
+
+  // Kiểm tra nếu là admin
+  if (user.role === 'admin') {
+    return (
+      <Container className="py-5">
+        <Alert variant="warning">
+          Tài khoản Admin không có trang Profile. Vui lòng truy cập <Alert.Link href="/admin">Admin Panel</Alert.Link>.
+        </Alert>
       </Container>
     );
   }

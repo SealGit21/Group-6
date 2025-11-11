@@ -123,6 +123,12 @@ export const api = {
   getUserOrders: async (userId) => {
     const res = await axios.get(`${API_BASE_URL}/orders?userId=${userId}`);
     return res.data;
+  },
+
+  //quan ly don hang
+  updateOrder: async (id, orderData) => {
+    const res = await axios.patch(`${API_BASE_URL}/orders/${id}`, orderData);
+    return res.data;
   }
 };
 
